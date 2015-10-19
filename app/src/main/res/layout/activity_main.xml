@@ -21,11 +21,13 @@
         android:id="@+id/main_tab_item_discover"
        style="@style/AppTheme.MainTabItem"
         android:checked="true"
+        android:drawableTop="@drawable/main_tab_item1_selector"
         android:text="发现"/>
 
         <RadioButton
             android:id="@+id/main_tab_item_custom"
             style="@style/AppTheme.MainTabItem"
+            android:drawableTop="@drawable/main_tab_item2_selector"
             android:text="定制听"/>
 
         <RadioButton
@@ -37,11 +39,13 @@
         <RadioButton
             android:id="@+id/main_tab_item_download"
             style="@style/AppTheme.MainTabItem"
+            android:drawableTop="@drawable/main_tab_item4_selector"
             android:text="下载听"/>
 
         <RadioButton
             android:id="@+id/main_tab_item_personal"
             style="@style/AppTheme.MainTabItem"
+            android:drawableTop="@drawable/main_tab_item5_selector"
             android:text="我"/>
     </RadioGroup>
 

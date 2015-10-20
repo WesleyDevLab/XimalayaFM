@@ -17,6 +17,15 @@ public class Constants {
     //版本号
     public static final String  SP_KEY_WELCOME_SHOW_VER = "wsv";
 
+    /**
+     * json数据返回码
+     */
+    public static final int TASK_RESULT_OK = 0;
+
+
+    //--------
+    //异步任务action 标识
+    public static final int TASK_ACTION_DISCOVER_CATEGORIES = 1;
 
 }
 

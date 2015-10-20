@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<color name="main_yellow">#fff87610</color>
+<color name="main_yellow">#FF5827</color>
+
+    <!-- 淡黑-->
+    <color name="slice_black">#9b000000</color>
 </resources>

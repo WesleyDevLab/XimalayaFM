@@ -70,7 +70,7 @@ public final class HttpTools {
 
                         //TODO 进行网络输入流的GZIP解压缩
                         String encoding = conn.getHeaderField("Content-Encoding");
-                        if("gzip".equals(encoding)){
+                        if ("gzip".equals(encoding)) {
                             in = new GZIPInputStream(in);
                         }
 
@@ -92,6 +92,7 @@ public final class HttpTools {
 
     /**
      * post方式请求操作
+     *
      * @param url
      * @param params
      * @param encode
@@ -102,8 +103,8 @@ public final class HttpTools {
                                 String encode) throws IOException {
         byte[] ret = null;
         // 把要提交的数据组织成username=kk&psw=111格式
-        if(url != null && params != null){
-            if(encode == null)
+        if (url != null && params != null) {
+            if (encode == null)
                 encode = "UTF-8";
 
             StringBuilder stringBuilder = new StringBuilder();

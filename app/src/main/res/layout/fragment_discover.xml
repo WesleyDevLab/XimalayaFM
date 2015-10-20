@@ -1,10 +1,42 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ximalayafm.beiing.com.ximalayafm.fragments.DiscoverFragment">
+    tools:context="ximalayafm.beiing.com.ximalayafm.fragments.DiscoverFragment"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="发现" />
+    <!--    <TextView android:layout_width="match_parent" android:layout_height="match_parent"-->
+    <!--android:text="发现" />-->
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_centerVertical="true"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
+    <!-- Android 5.0新的UI内容，使用design包兼容-->
+    <android.support.design.widget.TabLayout
+        android:id = "@+id/discover_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id = "@+id/discover_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>

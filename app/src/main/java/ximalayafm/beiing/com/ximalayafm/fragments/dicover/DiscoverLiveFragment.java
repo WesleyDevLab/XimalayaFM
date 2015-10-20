@@ -31,6 +31,6 @@ public class DiscoverLiveFragment extends BaseFragment {
 
     @Override
     public String getFragmentTitle() {
-        return null;
+        return "直播";
     }
 }

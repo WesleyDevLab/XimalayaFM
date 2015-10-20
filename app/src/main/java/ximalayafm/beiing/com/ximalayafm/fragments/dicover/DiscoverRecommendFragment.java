@@ -30,6 +30,6 @@ public class DiscoverRecommendFragment extends BaseFragment {
 
     @Override
     public String getFragmentTitle() {
-        return null;
+        return "推荐";
     }
 }

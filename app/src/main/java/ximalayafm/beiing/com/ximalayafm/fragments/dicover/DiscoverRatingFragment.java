@@ -31,6 +31,6 @@ public class DiscoverRatingFragment extends BaseFragment {
 
     @Override
     public String getFragmentTitle() {
-        return null;
+        return "榜单";
     }
 }

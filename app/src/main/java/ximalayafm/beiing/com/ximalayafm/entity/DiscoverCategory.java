@@ -33,11 +33,12 @@ public class DiscoverCategory {
 
     /**
      * 自己解析自己
+     *
      * @param json
      * @throws JSONException
      */
     public void parseJson(JSONObject json) throws JSONException {
-        if(json != null){
+        if (json != null) {
             id = json.getInt("id");
             name = json.getString("name");
             title = json.getString("title");
@@ -54,7 +55,6 @@ public class DiscoverCategory {
             contentType = json.optString("contentType");
         }
     }
-
 
 
     public void setId(int id) {
@@ -129,7 +129,20 @@ public class DiscoverCategory {
         return contentType;
     }
 
-
+    @Override
+    public String toString() {
+        return "DiscoverCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", isChecked=" + isChecked +
+                ", orderNum=" + orderNum +
+                ", coverPath='" + coverPath + '\'' +
+                ", selectedSwitch=" + selectedSwitch +
+                ", isFinished=" + isFinished +
+                ", contentType='" + contentType + '\'' +
+                '}';
+    }
 }
 
 

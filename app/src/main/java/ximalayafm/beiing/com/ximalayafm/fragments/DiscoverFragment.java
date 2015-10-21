@@ -27,6 +27,7 @@ public class DiscoverFragment extends Fragment implements TabLayout.OnTabSelecte
 
     ViewPager pager;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,6 +67,8 @@ public class DiscoverFragment extends Fragment implements TabLayout.OnTabSelecte
                 new CommonFragmentPagerAdapter(getChildFragmentManager(), fragments);
 
         pager.setAdapter(pagerAdapter);
+
+//        pager.setOffscreenPageLimit(4);
 
         // ViewPager 滑动与TabLayout绑定
         pager.addOnPageChangeListener(

@@ -25,19 +25,26 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
      * 主界面中第一层 Fragment ，发现，定制听，下载听，我
      */
     private Fragment[] fragments;
-//    FragmentManager fragmentManager;
+    FragmentManager fragmentManager;
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Toast.makeText(this, "fragments.len = " + fragments.length, Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_main);
 
-        Toast.makeText(this, "Build.Model:" + Build.MODEL,Toast.LENGTH_SHORT ).show();
+//        Toast.makeText(this, "Build.Model:" + Build.MODEL,Toast.LENGTH_SHORT ).show();
 
-        // TODO 检查横竖屏切换的时候，这个数组对象和内部元素是否置空
+        // TODO 检查横竖屏切换的时候，这个数组对象和内部元素是否置空:
+        // 由 onSaveInstanceState方法可得：fragments不会被置空，且大小一直是4
         fragments = new Fragment[4];
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
         if(savedInstanceState != null){
             //代表Activity重新创建，内部的Fragment会自动添加
@@ -92,7 +99,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
 
         int len = fragments.length;
-        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction tx = fragmentManager.beginTransaction();
         for (int i = 0; i < len; i++) {
             if(i == index){
                 tx.show(fragments[i]);

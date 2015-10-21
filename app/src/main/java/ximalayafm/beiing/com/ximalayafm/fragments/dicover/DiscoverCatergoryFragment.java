@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +35,8 @@ public class DiscoverCatergoryFragment extends BaseFragment implements TaskCallB
         super.onCreate(savedInstanceState);
 
         DiscoverCategoryTask task = new DiscoverCategoryTask(this);
-        task.execute();
+//        task.execute();
+//        Toast.makeText(getActivity(), "DiscoverCatergoryFragment : onCreate" , Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -47,8 +50,11 @@ public class DiscoverCatergoryFragment extends BaseFragment implements TaskCallB
                     Object data = result.data;
                     if(data != null && data instanceof List){
                         List list = (List) data;
-                        Log.d("list", "list : " + list);
+//                        Log.d("list", "list : " + list);
+//                        resultTv.setText(list.toString());
+//                        Toast.makeText(getActivity(), "size:" + list.size(), Toast.LENGTH_SHORT).show();
                     }
+
                 } else {
                     // TODO 加载失败
                 }
@@ -57,11 +63,21 @@ public class DiscoverCatergoryFragment extends BaseFragment implements TaskCallB
         }
     }
 
+    /**
+     * 一共有5个fragment，如果ViewPager不做任何设置时，每当一个fragment与当前显示的fragment间隔1时就会销毁view，但不会销毁fragment，
+     * 显示该界面时，该方法会重新调用，onCreate不会再次调用
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_discover_catergory, container, false);
+        View ret = inflater.inflate(R.layout.fragment_discover_catergory, container, false);
+//        Toast.makeText(getActivity(), "DiscoverCatergoryFragment : onCreateView" , Toast.LENGTH_SHORT).show();
+        return ret;
     }
 
 

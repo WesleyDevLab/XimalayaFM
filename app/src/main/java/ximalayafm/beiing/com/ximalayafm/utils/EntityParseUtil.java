@@ -13,6 +13,7 @@ import java.util.List;
 
 import ximalayafm.beiing.com.ximalayafm.Constants;
 import ximalayafm.beiing.com.ximalayafm.entity.DiscoverCategory;
+import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendItem;
 
 /**
  * 实体类解析工具类
@@ -22,6 +23,11 @@ public final class EntityParseUtil {
 
     }
 
+    /**
+     * 解析发现-分类
+     * @param json
+     * @return
+     */
     public static List<DiscoverCategory> parseDiscoverCategories(JSONObject json){
         List<DiscoverCategory> ret = null;
         if(json != null){
@@ -43,7 +49,6 @@ public final class EntityParseUtil {
                             ret.add(category);
                         }
                     }
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -52,4 +57,8 @@ public final class EntityParseUtil {
         return ret;
     }
 
+    public static List<DiscoverRecommendItem> parseDiscoverRecommends(JSONObject jsonObject) {
+
+        return null;
+    }
 }

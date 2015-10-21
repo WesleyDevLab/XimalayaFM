@@ -13,6 +13,7 @@ import java.util.List;
 
 import ximalayafm.beiing.com.ximalayafm.Constants;
 import ximalayafm.beiing.com.ximalayafm.entity.DiscoverCategory;
+import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendAlbums;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendItem;
 
 /**
@@ -57,8 +58,60 @@ public final class EntityParseUtil {
         return ret;
     }
 
+    /**
+     * 解析 "发现"模块中 推荐 栏目中的数据结构
+     * @param jsonObject
+     * @return
+     */
     public static List<DiscoverRecommendItem> parseDiscoverRecommends(JSONObject jsonObject) {
+        List<DiscoverRecommendItem> ret = null;
 
-        return null;
+        if (jsonObject != null) {
+            try {
+                int code  = jsonObject.getInt("ret");
+                if(code == Constants.TASK_RESULT_OK){
+                    ret = new LinkedList<>();
+
+                    //---小编推荐
+                    JSONObject object = jsonObject.getJSONObject("editorRecommendAlbums");
+                    DiscoverRecommendAlbums editorRecommend = new DiscoverRecommendAlbums();
+                    editorRecommend.parseJson(object);
+                    ret.add(editorRecommend);
+
+                    //----------------------------------------------
+
+                    //TODO 解析 精品听单
+
+                    //TODO 解析 发现新奇
+
+
+
+
+                    //解析热门推荐
+                    JSONObject  hotRecommendsObject = jsonObject.getJSONObject("hotRecommends");
+                    JSONArray hotArray = hotRecommendsObject.getJSONArray("list");
+                    int len = hotArray.length();
+                    for (int i = 0; i < len; i++) {
+                        //获取热门推荐内部List中每一个推荐信息
+                        JSONObject jj = hotArray.getJSONObject(i);
+                        DiscoverRecommendAlbums hotAlbums = new DiscoverRecommendAlbums();
+                        hotAlbums.parseJson(jj);
+                        ret.add(hotAlbums);
+                    }
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return ret;
     }
 }
+
+
+
+
+
+

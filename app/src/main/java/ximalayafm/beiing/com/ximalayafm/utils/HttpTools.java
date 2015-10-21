@@ -25,8 +25,8 @@ public final class HttpTools {
 
     }
 
-    private static final int CONNECT_TIMEOUT = 5000;
-    private static final int READ_TIMEOUT = 6000;
+    private static final int CONNECT_TIMEOUT = 5000;//连接超时
+    private static final int READ_TIMEOUT = 30000; //读取超时
 
 
     /**

@@ -28,7 +28,7 @@ public class DiscoverRecommendAlbums extends DiscoverRecommendItem {
 		//因为super中包含了title， hasMore
 		super.parseJson(json);
 
-		ret = json.getInt("ret");
+		ret = json.optInt("ret", 0);
 
 		JSONArray array = json.getJSONArray("list");
 

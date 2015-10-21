@@ -8,6 +8,10 @@ import ximalayafm.beiing.com.ximalayafm.entity.AlbumBasic;
 /**
  * Created by Administrator on 2015/10/21.
  */
+
+/**
+ * 发现-推荐内部一个专辑推荐，组合成一个”小编推荐“
+ */
 public class AlbumRecommend extends AlbumBasic {
     /**
      * "albumId": 344497,

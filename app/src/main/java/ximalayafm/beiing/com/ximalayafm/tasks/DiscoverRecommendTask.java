@@ -35,13 +35,9 @@ public class DiscoverRecommendTask extends BaseTask {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
-
         return ret;
     }
-
-
 }
 
 

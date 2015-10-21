@@ -35,7 +35,7 @@ public class AlbumBasic {
             albumId = json.getLong("albumId");
             coverLarge = json.getString("coverLarge");
             title = json.getString("title");
-            tags = json.getString("tags");
+            tags = json.optString("tags");//这个可能没有，所以需要使用opt
             tracks = json.getLong("tracks");
         }
     }

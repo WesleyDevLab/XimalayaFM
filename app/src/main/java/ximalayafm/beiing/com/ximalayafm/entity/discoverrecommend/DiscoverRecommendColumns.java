@@ -1,6 +1,6 @@
 package ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend;
 
-public class DiscoverRecommenColumns extends DiscoverRecommendItem {
+public class DiscoverRecommendColumns extends DiscoverRecommendItem {
 	private Object _title;
 	private Object _hasMore;
 }

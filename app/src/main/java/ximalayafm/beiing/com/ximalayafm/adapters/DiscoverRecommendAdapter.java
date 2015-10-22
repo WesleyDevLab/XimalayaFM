@@ -24,6 +24,8 @@ import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecomme
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendColumns;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendItem;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendSpecial;
+import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoveryRecommend;
+import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.SpecialRecommend;
 
 /**
  * 发现  推荐部分的ListView Adapter
@@ -36,10 +38,19 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
 
     private Context context;
 
+    //---------------------------------
+    //点击事件处理器
+    //推荐专辑的点击事件
+    private View.OnClickListener onRecommendAlbumCLickListener;
+
     public DiscoverRecommendAdapter(Context context, List<DiscoverRecommendItem> items) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.items = items;
+    }
+
+    public void setOnRecommendAlbumCLickListener(View.OnClickListener onRecommendAlbumCLickListener) {
+        this.onRecommendAlbumCLickListener = onRecommendAlbumCLickListener;
     }
 
     @Override
@@ -122,9 +133,16 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
             holder.albumNames = new TextView[3];
             holder.trackNames = new TextView[3];
 
+            //TODO 点击 more, 进入推荐列表
+
+
             for (int i = 0; i < 3; i++) {
                 //给Holder设置数组的内容
                 holder.albumIcons[i] = (ImageView) findView(ret, "recommend_album_icon_" + i);
+
+                // TODO 点击专辑图片，进入专辑详情
+                holder.albumIcons[i].setOnClickListener(onRecommendAlbumCLickListener);
+
                 holder.albumNames[i] = (TextView) findView(ret,"recommend_album_name_" + i);
                 holder.trackNames[i] = (TextView) findView(ret, "recommend_album_track_name_" + i);
             }
@@ -153,15 +171,19 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
                 holder.albumNames[i].setText(title);
                 title = albumRecommend.getTrackTitle();//获取推荐曲目名称
                 holder.trackNames[i].setText(title);
-
+                
                 //使用 Picasso  加载图片
                 String coverLarge = albumRecommend.getCoverLarge();
                 //创建实例 - 设置加载网址 - 设置居中裁剪 - 设置ImageView
+                ImageView albumIcon = holder.albumIcons[i];
+//                albumIcon.setTag("albumRecommend:" + position + ":" + i);
+
+                albumIcon.setTag(albumRecommend);
+
                 Picasso.with(context).load(coverLarge)
-                       .fit().into(holder.albumIcons[i]);
+                        .fit().into(albumIcon);
             }
         }
-
 
         return ret;
     }
@@ -182,8 +204,8 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
         } else {
             ret = inflater.inflate(R.layout.discover_recommend_special_item, parent, false);
         }
-
         SpecialViewHolder holder = (SpecialViewHolder) ret.getTag();
+
         if(holder == null){
             holder = new SpecialViewHolder();
             holder.txtTitle = (TextView) ret.findViewById(R.id.recommend_special_title);
@@ -204,6 +226,34 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
             DiscoverRecommendSpecial specials = (DiscoverRecommendSpecial) items.get(position);
             String title = specials.getTitle();
             holder.txtTitle.setText(title);
+
+            //处理 "更多"
+            if(specials.isHasMore()){
+                holder.txtMore.setVisibility(View.VISIBLE);
+            } else {
+                holder.txtMore.setVisibility(View.INVISIBLE);
+            }
+
+            //处理听单
+            List<SpecialRecommend> specialRecommends = specials.getSpecialRecommends();
+            int len = holder.specialCovers.length;
+            if (specialRecommends != null) {
+                for (int i = 0; i < len; i++) {
+                    SpecialRecommend specialRecommend = specialRecommends.get(i);
+                    title = specialRecommend.getTitle();
+                    holder.specialNames[i].setText(title);
+                    title = specialRecommend.getSubtitle();
+                    holder.specialSubNames[i].setText(title);
+                    title = specialRecommend.getFootnote();
+                    holder.specialFootnote[i].setText(title);
+
+                    //使用 Picasso  加载图片
+                    String coverPath = specialRecommend.getCoverPath();
+                    //创建实例 - 设置加载网址 - 设置居中fit - 设置ImageView
+                    Picasso.with(context).load(coverPath)
+                            .fit().into(holder.specialCovers[i]);
+                }
+            }
 
             ret.setTag(holder);
         }
@@ -246,7 +296,29 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
             String title = discoveries.getTitle();
             holder.txtTitle.setText(title);
 
+            //处理 "更多"
+            if(discoveries.isHasMore()){
+                holder.txtMore.setVisibility(View.VISIBLE);
+            } else {
+                holder.txtMore.setVisibility(View.INVISIBLE);
+            }
 
+            List<DiscoveryRecommend> discoveryRecommends = discoveries.getDiscoveryRecommends();
+            int len = holder.discoveryNames.length;
+            if (discoveryRecommends != null) {
+                for (int i = 0; i < len; i++) {
+                    DiscoveryRecommend discoveryRecommend = discoveryRecommends.get(i);
+                    title = discoveryRecommend.getTitle();
+                    holder.discoveryNames[i].setText(title);
+                    title = discoveryRecommend.getSubtitle();
+                    holder.getDiscoverySubNames[i].setText(title);
+
+                    String coverPath = discoveryRecommend.getCoverPath();
+                    //创建实例 - 设置加载网址 - 设置居中fit - 设置ImageView
+                    Picasso.with(context).load(coverPath)
+                            .fit().into(holder.discoveryCovers[i]);
+                }
+            }
 
             ret.setTag(holder);
         }

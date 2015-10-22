@@ -9,6 +9,8 @@
         android:id="@+id/recommend_album_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/finding_title_tag"
+        android:drawablePadding="3dp"
         android:text="小编推荐"/>
 
     <TextView
@@ -17,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
-        android:text="更多>"/>
+        android:text="更多"
+        android:drawableRight="@drawable/arrow_right"/>
 
     <LinearLayout
         android:layout_marginTop="10dp"

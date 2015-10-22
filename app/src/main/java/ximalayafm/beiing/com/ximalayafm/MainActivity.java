@@ -31,7 +31,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Toast.makeText(this, "fragments.len = " + fragments.length, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "fragments.len = " + fragments.length, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class DiscoverRecommendAlbums extends DiscoverRecommendItem{
 
 			int len = array.length();
 
-			albumRecommends = new LinkedList<AlbumRecommend>();
+			albumRecommends = new ArrayList<>();
 			if(len > 0){
 				for (int i = 0; i < len; i++) {
 					//解析内部的专辑推荐

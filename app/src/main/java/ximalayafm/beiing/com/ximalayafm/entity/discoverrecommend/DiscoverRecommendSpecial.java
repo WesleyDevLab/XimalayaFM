@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class DiscoverRecommendSpecial extends DiscoverRecommendItem {
             ret = json.optInt("ret", 0);
             JSONArray array = json.getJSONArray("list");
             int len = array.length();
-            specialRecommends = new LinkedList<>();
+            specialRecommends = new ArrayList<>();
             if(len > 0){
                 for (int i = 0; i < len; i++) {
                     JSONObject object = array.getJSONObject(i);

@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class DiscoverRecommendColumns extends DiscoverRecommendItem{
 
             JSONArray array = json.getJSONArray("list");
             int len = array.length();
-            discoveryRecommends = new LinkedList<>();
+            discoveryRecommends = new ArrayList<>();
             if(len > 0){
                 for (int i = 0; i < len; i++) {
                     JSONObject object = array.getJSONObject(i);

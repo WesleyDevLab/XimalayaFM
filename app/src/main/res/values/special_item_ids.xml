@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--定义代码中使用的id,用于 自定义的View SpecialItemView-->
+<resources>
+    <item type="id" name="special_item_icon" ></item>
+
+    <item type="id" name="special_item_title" ></item>
+
+    <item type="id" name="special_item_subtitle" ></item>
+</resources>

@@ -12,7 +12,12 @@
     <!-- 白-->
     <color name="white">#fff</color>
 
-
+    <!-- 淡灰色-->
     <color name="line_gray">#4D000000</color>
 
+    <!-- textView背景-透明灰色-->
+    <color name="tras_gray">#25000000</color>
+
+    <!-- listView divider 颜色-->
+    <color name="divider_bg_gray">#EEECE9</color>
 </resources>

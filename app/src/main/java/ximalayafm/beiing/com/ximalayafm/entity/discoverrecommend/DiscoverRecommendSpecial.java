@@ -39,15 +39,8 @@ public class DiscoverRecommendSpecial extends DiscoverRecommendItem {
         return ret;
     }
 
-    public void setRet(int ret) {
-        this.ret = ret;
-    }
-
     public List<SpecialRecommend> getSpecialRecommends() {
         return specialRecommends;
     }
 
-    public void setSpecialRecommends(List<SpecialRecommend> specialRecommends) {
-        this.specialRecommends = specialRecommends;
-    }
 }

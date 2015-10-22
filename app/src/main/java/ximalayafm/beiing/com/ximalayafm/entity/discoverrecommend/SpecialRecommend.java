@@ -28,7 +28,7 @@ public class SpecialRecommend extends ColumnBasic {
         super.parseJson(json);
         columnType = json.getInt("columnType");
         specialId = json.getLong("specialId");
-        footnote = json.getString("footnote");
+        footnote = json.optString("footnote");
     }
 
     public int getColumnType() {

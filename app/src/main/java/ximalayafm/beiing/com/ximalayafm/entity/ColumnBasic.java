@@ -2,6 +2,8 @@ package ximalayafm.beiing.com.ximalayafm.entity;
 
 /**
  * Created by Administrator on 2015/10/21.
+ * <p/>
+ * 精品听单 和 发现新奇 公共部分
  */
 
 /**
@@ -47,11 +49,11 @@ public class ColumnBasic {
     private String contentType;
 
     public void parseJson(JSONObject jsonObject) throws JSONException {
-        if(jsonObject != null){
+        if (jsonObject != null) {
             title = jsonObject.getString("title");
-            subtitle = jsonObject.getString("subtitle");
-            coverPath = jsonObject.getString("coverPath");
-            contentType = jsonObject.getString("contentType");
+            subtitle = jsonObject.optString("subtitle");
+            coverPath = jsonObject.optString("coverPath");
+            contentType = jsonObject.optString("contentType");
         }
     }
 
@@ -60,31 +62,15 @@ public class ColumnBasic {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getSubtitle() {
         return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
     }
 
     public String getCoverPath() {
         return coverPath;
     }
 
-    public void setCoverPath(String coverPath) {
-        this.coverPath = coverPath;
-    }
-
     public String getContentType() {
         return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 }

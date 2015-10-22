@@ -21,17 +21,21 @@
 
     <RelativeLayout
         android:id="@+id/recommend_special_rl_0"
+        android:layout_marginBottom="1dp"
         android:layout_below="@id/recommend_special_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/recommend_special_cover_0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/image_default"/>
+            android:layout_marginRight="10dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/image_default"/>
         <TextView
             android:id="@+id/recommend_special_name_0"
+            android:layout_marginTop="2dp"
             android:layout_toRightOf="@id/recommend_special_cover_0"
+            android:layout_alignTop="@id/recommend_special_cover_0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="name"
@@ -42,7 +46,7 @@
         <TextView
             android:id="@+id/recommend_special_more_icon_0"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/recommend_special_name_0"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +55,7 @@
         <TextView
             android:id="@+id/recommend_special_subname_0"
             android:layout_toRightOf="@id/recommend_special_cover_0"
-            android:layout_below="@id/recommend_special_name_0"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/recommend_special_more_icon_0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +68,8 @@
         <TextView
             android:id="@+id/recommend_special_footnote_0"
             android:layout_toRightOf="@id/recommend_special_cover_0"
-            android:layout_below="@id/recommend_special_subname_0"
+            android:layout_alignBottom="@id/recommend_special_cover_0"
+            android:layout_marginBottom="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="10sp"
@@ -85,12 +90,15 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/recommend_special_cover_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/image_default"/>
+            android:layout_marginRight="10dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/image_default"/>
         <TextView
             android:id="@+id/recommend_special_name_1"
             android:layout_toRightOf="@id/recommend_special_cover_1"
+            android:layout_alignTop="@id/recommend_special_cover_1"
+            android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="name"
@@ -102,6 +110,7 @@
             android:id="@+id/recommend_special_more_icon_1"
             android:layout_alignParentRight="true"
             android:layout_below="@id/recommend_special_name_1"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,8 +119,8 @@
         <TextView
             android:id="@+id/recommend_special_subname_1"
             android:layout_toRightOf="@id/recommend_special_cover_1"
-            android:layout_below="@id/recommend_special_name_1"
             android:layout_toLeftOf="@id/recommend_special_more_icon_1"
+            android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -123,7 +132,8 @@
         <TextView
             android:id="@+id/recommend_special_footnote_1"
             android:layout_toRightOf="@id/recommend_special_cover_1"
-            android:layout_below="@id/recommend_special_subname_1"
+            android:layout_alignBottom="@id/recommend_special_cover_1"
+            android:layout_marginBottom="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="10sp"

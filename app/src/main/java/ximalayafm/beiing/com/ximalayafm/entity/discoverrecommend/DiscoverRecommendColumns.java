@@ -11,12 +11,14 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import ximalayafm.beiing.com.ximalayafm.entity.Parsable;
+
 /**
  * "ret": 0,
  "title": "发现新奇",
  "list": []
  */
-public class DiscoverRecommendColumns extends DiscoverRecommendItem {
+public class DiscoverRecommendColumns extends DiscoverRecommendItem{
     private int ret;
 
     private List<DiscoveryRecommend> discoveryRecommends;

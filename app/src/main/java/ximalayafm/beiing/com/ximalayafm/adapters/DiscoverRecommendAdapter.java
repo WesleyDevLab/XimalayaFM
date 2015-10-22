@@ -13,10 +13,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
 import ximalayafm.beiing.com.ximalayafm.R;
+import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.AlbumRecommend;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendAlbums;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendColumns;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendItem;
@@ -31,8 +34,11 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
 
     private List<DiscoverRecommendItem> items;
 
+    private Context context;
+
     public DiscoverRecommendAdapter(Context context, List<DiscoverRecommendItem> items) {
         inflater = LayoutInflater.from(context);
+        this.context = context;
         this.items = items;
     }
 
@@ -130,6 +136,31 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
         DiscoverRecommendAlbums albums = (DiscoverRecommendAlbums) items.get(position);
         String title = albums.getTitle();
         holder.txtTitle.setText(title);
+
+        //处理 "更多"
+        if(albums.isHasMore()){
+            holder.txtMore.setVisibility(View.VISIBLE);
+        } else {
+            holder.txtMore.setVisibility(View.INVISIBLE);
+        }
+        //处理专辑标题
+        List<AlbumRecommend> albumRecommends = albums.getAlbumRecommends();
+        int len = holder.albumIcons.length;
+        if (albumRecommends != null) {
+            for (int i = 0; i < len; i++){
+                AlbumRecommend albumRecommend = albumRecommends.get(i);
+                title = albumRecommend.getTitle();//获取专辑名称
+                holder.albumNames[i].setText(title);
+                title = albumRecommend.getTrackTitle();//获取推荐曲目名称
+                holder.trackNames[i].setText(title);
+
+                //使用 Picasso  加载图片
+                String coverLarge = albumRecommend.getCoverLarge();
+                //创建实例 - 设置加载网址 - 设置居中裁剪 - 设置ImageView
+                Picasso.with(context).load(coverLarge)
+                       .fit().into(holder.albumIcons[i]);
+            }
+        }
 
 
         return ret;

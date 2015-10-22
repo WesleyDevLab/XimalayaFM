@@ -8,10 +8,12 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import ximalayafm.beiing.com.ximalayafm.entity.Parsable;
+
 /**
  *小编推荐 和 热门推荐
  */
-public class DiscoverRecommendAlbums extends DiscoverRecommendItem {
+public class DiscoverRecommendAlbums extends DiscoverRecommendItem{
 	/**
 	  "ret": 0,
 	 "title": "小编推荐",
@@ -52,17 +54,11 @@ public class DiscoverRecommendAlbums extends DiscoverRecommendItem {
 		return ret;
 	}
 
-	public void setRet(int ret) {
-		this.ret = ret;
-	}
-
 	public List<AlbumRecommend> getAlbumRecommends() {
 		return albumRecommends;
 	}
 
-	public void setAlbumRecommends(List<AlbumRecommend> albumRecommends) {
-		this.albumRecommends = albumRecommends;
-	}
+
 }
 
 

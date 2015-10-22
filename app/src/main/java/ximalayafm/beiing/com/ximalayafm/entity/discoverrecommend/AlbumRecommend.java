@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ximalayafm.beiing.com.ximalayafm.entity.AlbumBasic;
+import ximalayafm.beiing.com.ximalayafm.entity.Parsable;
 
 /**
  * Created by Administrator on 2015/10/21.
@@ -12,7 +13,7 @@ import ximalayafm.beiing.com.ximalayafm.entity.AlbumBasic;
 /**
  * 发现-推荐内部一个专辑推荐，组合成一个”小编推荐“
  */
-public class AlbumRecommend extends AlbumBasic {
+public class AlbumRecommend extends AlbumBasic implements Parsable{
     /**
      * "albumId": 344497,
      "coverLarge": "http://fdfs.xmcdn.com/group6/M02/35/45/wKgDhFTg4w_SDkc9AAT-fXngGBY184_mobile_large.jpg",
@@ -31,6 +32,7 @@ public class AlbumRecommend extends AlbumBasic {
     private long trackId;
     private String trackTitle;
 
+    @Override
     public void parseJson(JSONObject json) throws JSONException {
         super.parseJson(json);
         if(json != null){
@@ -41,7 +43,11 @@ public class AlbumRecommend extends AlbumBasic {
         }
     }
 
+    public long getTrackId() {
+        return trackId;
+    }
 
-
-
+    public String getTrackTitle() {
+        return trackTitle;
+    }
 }

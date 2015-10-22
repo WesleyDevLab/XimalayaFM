@@ -3,7 +3,9 @@ package ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DiscoverRecommendItem {
+import ximalayafm.beiing.com.ximalayafm.entity.Parsable;
+
+public class DiscoverRecommendItem implements Parsable {
 	private String title;
 	private boolean hasMore;
 

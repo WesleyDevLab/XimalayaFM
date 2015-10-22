@@ -14,7 +14,9 @@ import java.util.List;
 import ximalayafm.beiing.com.ximalayafm.Constants;
 import ximalayafm.beiing.com.ximalayafm.entity.DiscoverCategory;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendAlbums;
+import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendColumns;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendItem;
+import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendSpecial;
 
 /**
  * 实体类解析工具类
@@ -79,13 +81,17 @@ public final class EntityParseUtil {
                     ret.add(editorRecommend);
 
                     //----------------------------------------------
-
                     //TODO 解析 精品听单
+                    JSONObject specialJson = jsonObject.getJSONObject("specialColumn");
+                    DiscoverRecommendSpecial specialRecommend = new DiscoverRecommendSpecial();
+                    specialRecommend.parseJson(specialJson);
+                    ret.add(specialRecommend);
 
                     //TODO 解析 发现新奇
-
-
-
+                    JSONObject discoveryJson = jsonObject.getJSONObject("discoveryColumns");
+                    DiscoverRecommendColumns discoverRecommend = new DiscoverRecommendColumns();
+                    discoverRecommend.parseJson(discoveryJson);
+                    ret.add(discoverRecommend);
 
                     //解析热门推荐
                     JSONObject  hotRecommendsObject = jsonObject.getJSONObject("hotRecommends");

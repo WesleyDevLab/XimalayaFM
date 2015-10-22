@@ -77,7 +77,7 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
         View ret = null;
         DiscoverRecommendItem item = items.get(position);
 
-        if (item instanceof DiscoverRecommendAlbums) {//小编推荐
+        if (item instanceof DiscoverRecommendAlbums) {//小编推荐 / 热门推荐
             ret = bindAlbumsView(position, convertView, parent);
         } else if (item instanceof DiscoverRecommendColumns) {//发现新奇
             ret = bindColumnView(position, convertView, parent);
@@ -136,19 +136,6 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
     }
 
     /**
-     * 加载 发现新奇
-     *
-     * @param position
-     * @param convertView
-     * @param parent
-     * @return
-     */
-    private View bindColumnView(int position, View convertView, ViewGroup parent) {
-
-        return null;
-    }
-
-    /**
      * 加载 新品听单
      *
      * @param position
@@ -157,9 +144,86 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
      * @return
      */
     private View bindSpecialView(int position, View convertView, ViewGroup parent) {
+        View ret = null;
 
-        return null;
+        if (convertView != null) {
+            ret = convertView;
+        } else {
+            ret = inflater.inflate(R.layout.discover_recommend_special_item, parent, false);
+        }
+
+        SpecialViewHolder holder = (SpecialViewHolder) ret.getTag();
+        if(holder == null){
+            holder = new SpecialViewHolder();
+            holder.txtTitle = (TextView) ret.findViewById(R.id.recommend_special_title);
+            holder.txtMore = (TextView) ret.findViewById(R.id.recommend_special_more);
+            holder.specialCovers = new ImageView[2];
+            holder.specialNames = new TextView[2];
+            holder.specialSubNames = new TextView[2];
+            holder.specialFootnote = new TextView[2];
+
+            for (int i = 0; i < 2; i++) {
+                holder.specialCovers[i] = (ImageView) findView(ret, "recommend_special_cover_" + i);
+                holder.specialNames[i] = (TextView) findView(ret, "recommend_special_name_" + i);
+                holder.specialSubNames[i] = (TextView) findView(ret, "recommend_special_subname_" + i);
+                holder.specialFootnote[i] = (TextView) findView(ret, "recommend_special_footnote_" + i);
+            }
+
+            //获取数据、设置数据
+            DiscoverRecommendSpecial specials = (DiscoverRecommendSpecial) items.get(position);
+            String title = specials.getTitle();
+            holder.txtTitle.setText(title);
+
+            ret.setTag(holder);
+        }
+
+        return ret;
     }
+
+    /**
+     * 加载 发现新奇
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
+    private View bindColumnView(int position, View convertView, ViewGroup parent) {
+        View ret = null;
+        if(convertView != null){
+            ret = convertView;
+        } else{
+            ret = inflater.inflate(R.layout.discover_recommend_discovery_item, parent, false);
+        }
+        DiscoveryViewHolder holder = (DiscoveryViewHolder) ret.getTag();
+        if(holder == null){
+            holder = new DiscoveryViewHolder();
+            holder.txtTitle = (TextView) ret.findViewById(R.id.recommend_discovery_title);
+            holder.txtMore = (TextView) ret.findViewById(R.id.recommend_discovery_more);
+            holder.discoveryCovers = new ImageView[4];
+            holder.discoveryNames = new TextView[4];
+            holder.getDiscoverySubNames = new TextView[4];
+
+            for (int i = 0; i < 4; i++) {
+                holder.discoveryCovers[i] = (ImageView) findView(ret, "recommend_discovery_cover_" + i);
+                holder.discoveryNames[i] = (TextView) findView(ret, "recommend_discovery_name_" + i);
+                holder.getDiscoverySubNames[i] = (TextView) findView(ret, "recommend_discovery_subname_" + i);
+            }
+
+            //获取数据 并设置
+            DiscoverRecommendColumns discoveries = (DiscoverRecommendColumns) items.get(position);
+            String title = discoveries.getTitle();
+            holder.txtTitle.setText(title);
+
+
+
+            ret.setTag(holder);
+        }
+
+        return ret;
+    }
+
+
 
     /**
      * 根据名称获取ID(反射)
@@ -188,7 +252,7 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
     }
 
     /**
-     * 小编推荐的 ViewHolder
+     * 小编推荐 / 热门推荐 的 ViewHolder
      */
     private static class AlbumViewHolder{
         TextView txtTitle;
@@ -198,6 +262,30 @@ public class DiscoverRecommendAdapter extends BaseAdapter {
         TextView[] trackNames;//三个曲目名称
     }
 
+
+    /**
+     *精品听单的 ViewHolder
+     */
+    private static class SpecialViewHolder{
+        TextView txtTitle;
+        TextView txtMore;
+        ImageView[] specialCovers;//两张图片
+        TextView[] specialNames;//两个精品听单title
+        TextView[] specialSubNames;//两个精品听单的subTitle
+        TextView[] specialFootnote;//专辑数
+    }
+
+
+    /**
+     * 发现新奇的 ViewHolder
+     */
+    private static class DiscoveryViewHolder{
+        TextView txtTitle;
+        TextView txtMore;
+        ImageView[] discoveryCovers;//精品听单四个图标
+        TextView[] discoveryNames;//四个title
+        TextView[] getDiscoverySubNames;//四个subTitle
+    }
 
 
 }

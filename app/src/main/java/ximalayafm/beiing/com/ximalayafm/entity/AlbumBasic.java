@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 专辑基本信息
+ * 专辑基本信息(小编推荐 / 热门推荐 公用)
  * @see ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.AlbumRecommend
  */
 public class AlbumBasic {

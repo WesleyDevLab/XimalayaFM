@@ -10,7 +10,7 @@ public class DiscoverRecommendItem {
 	public void parseJson(JSONObject json) throws JSONException {
 		if(json != null){
 			title = json.getString("title");
-			hasMore = json.getBoolean("hasMore");
+			hasMore = json.optBoolean("hasMore");
 		}
 
 	}

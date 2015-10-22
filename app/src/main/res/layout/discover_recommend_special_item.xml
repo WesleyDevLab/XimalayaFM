@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <!--顶部内容-->
+    <TextView
+        android:id="@+id/recommend_special_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="小编推荐"/>
+
+    <TextView
+        android:id="@+id/recommend_special_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="更多>"/>
+
+
+
+    <RelativeLayout
+        android:id="@+id/recommend_special_rl_0"
+        android:layout_below="@id/recommend_special_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/recommend_special_cover_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_default"/>
+        <TextView
+            android:id="@+id/recommend_special_name_0"
+            android:layout_toRightOf="@id/recommend_special_cover_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/recommend_special_more_icon_0"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/recommend_special_name_0"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"/>
+
+        <TextView
+            android:id="@+id/recommend_special_subname_0"
+            android:layout_toRightOf="@id/recommend_special_cover_0"
+            android:layout_below="@id/recommend_special_name_0"
+            android:layout_toLeftOf="@id/recommend_special_more_icon_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="subname"
+            />
+
+
+        <TextView
+            android:id="@+id/recommend_special_footnote_0"
+            android:layout_toRightOf="@id/recommend_special_cover_0"
+            android:layout_below="@id/recommend_special_subname_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="10首专辑"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@id/recommend_special_cover_0"
+            android:layout_height="0.2dp"
+            android:layout_alignBottom="@id/recommend_special_cover_0"
+            android:background="@color/line_gray"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_below="@id/recommend_special_rl_0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/recommend_special_cover_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_default"/>
+        <TextView
+            android:id="@+id/recommend_special_name_1"
+            android:layout_toRightOf="@id/recommend_special_cover_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/recommend_special_more_icon_1"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/recommend_special_name_1"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"/>
+
+        <TextView
+            android:id="@+id/recommend_special_subname_1"
+            android:layout_toRightOf="@id/recommend_special_cover_1"
+            android:layout_below="@id/recommend_special_name_1"
+            android:layout_toLeftOf="@id/recommend_special_more_icon_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="subname"
+            />
+
+
+        <TextView
+            android:id="@+id/recommend_special_footnote_1"
+            android:layout_toRightOf="@id/recommend_special_cover_1"
+            android:layout_below="@id/recommend_special_subname_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="10首专辑"/>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

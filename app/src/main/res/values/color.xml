@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 主题橘黄-->
 <color name="main_yellow">#FF5827</color>
 
     <!-- 淡黑-->
     <color name="slice_black">#9b000000</color>
+
+    <!-- 黑-->
+    <color name="black">#000</color>
+
+    <!-- 白-->
+    <color name="white">#fff</color>
+
+
+    <color name="line_gray">#4D000000</color>
+
 </resources>

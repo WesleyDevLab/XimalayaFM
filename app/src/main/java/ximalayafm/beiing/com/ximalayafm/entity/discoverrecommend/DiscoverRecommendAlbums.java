@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
+ *小编推荐 和 热门推荐
  */
 public class DiscoverRecommendAlbums extends DiscoverRecommendItem {
 	/**
@@ -26,30 +26,43 @@ public class DiscoverRecommendAlbums extends DiscoverRecommendItem {
 	public void parseJson(JSONObject json) throws JSONException {
 		//调用父类的解析，解析父类需要使用的数据
 		//因为super中包含了title， hasMore
-		super.parseJson(json);
+		if (json != null) {
+			super.parseJson(json);
 
-		ret = json.optInt("ret", 0);
+			ret = json.optInt("ret", 0);
 
-		JSONArray array = json.getJSONArray("list");
+			JSONArray array = json.getJSONArray("list");
 
-		int len = array.length();
+			int len = array.length();
 
-		albumRecommends = new LinkedList<AlbumRecommend>();
-		if(len > 0){
-			for (int i = 0; i < len; i++) {
-				//解析内部的专辑推荐
-				JSONObject jsonObject = array.getJSONObject(i);
-				AlbumRecommend album = new AlbumRecommend();
-				album.parseJson(jsonObject);
-				albumRecommends.add(album);
+			albumRecommends = new LinkedList<AlbumRecommend>();
+			if(len > 0){
+				for (int i = 0; i < len; i++) {
+					//解析内部的专辑推荐
+					JSONObject jsonObject = array.getJSONObject(i);
+					AlbumRecommend album = new AlbumRecommend();
+					album.parseJson(jsonObject);
+					albumRecommends.add(album);
+				}
 			}
 		}
-
-
 	}
 
+	public int getRet() {
+		return ret;
+	}
 
+	public void setRet(int ret) {
+		this.ret = ret;
+	}
 
+	public List<AlbumRecommend> getAlbumRecommends() {
+		return albumRecommends;
+	}
+
+	public void setAlbumRecommends(List<AlbumRecommend> albumRecommends) {
+		this.albumRecommends = albumRecommends;
+	}
 }
 
 

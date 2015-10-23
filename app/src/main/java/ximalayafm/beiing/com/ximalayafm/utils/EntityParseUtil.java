@@ -8,8 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import ximalayafm.beiing.com.ximalayafm.Constants;
 import ximalayafm.beiing.com.ximalayafm.entity.DiscoverCategory;
@@ -17,6 +20,7 @@ import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecomme
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendColumns;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendItem;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendSpecial;
+import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.FocusImageItem;
 
 /**
  * 实体类解析工具类
@@ -65,33 +69,38 @@ public final class EntityParseUtil {
      * @param jsonObject
      * @return
      */
-    public static List<DiscoverRecommendItem> parseDiscoverRecommends(JSONObject jsonObject) {
-        List<DiscoverRecommendItem> ret = null;
+    public static Map<String, Object> parseDiscoverRecommends(JSONObject jsonObject) {
+        Map<String, Object> ret = null;
+
+        List<DiscoverRecommendItem> discoverRecommendItems = null;
 
         if (jsonObject != null) {
             try {
                 int code  = jsonObject.getInt("ret");
                 if(code == Constants.TASK_RESULT_OK){
-                    ret = new LinkedList<>();
+
+                    ret = new HashMap<>();
+
+                    discoverRecommendItems = new ArrayList<>();
 
                     //---小编推荐
                     JSONObject object = jsonObject.getJSONObject("editorRecommendAlbums");
                     DiscoverRecommendAlbums editorRecommend = new DiscoverRecommendAlbums();
                     editorRecommend.parseJson(object);
-                    ret.add(editorRecommend);
+                    discoverRecommendItems.add(editorRecommend);
 
                     //----------------------------------------------
                     //TODO 解析 精品听单
                     JSONObject specialJson = jsonObject.getJSONObject("specialColumn");
                     DiscoverRecommendSpecial specialRecommend = new DiscoverRecommendSpecial();
                     specialRecommend.parseJson(specialJson);
-                    ret.add(specialRecommend);
+                    discoverRecommendItems.add(specialRecommend);
 
                     //TODO 解析 发现新奇
                     JSONObject discoveryJson = jsonObject.getJSONObject("discoveryColumns");
                     DiscoverRecommendColumns discoverRecommend = new DiscoverRecommendColumns();
                     discoverRecommend.parseJson(discoveryJson);
-                    ret.add(discoverRecommend);
+                    discoverRecommendItems.add(discoverRecommend);
 
                     //解析热门推荐
                     JSONObject  hotRecommendsObject = jsonObject.getJSONObject("hotRecommends");
@@ -102,8 +111,28 @@ public final class EntityParseUtil {
                         JSONObject jj = hotArray.getJSONObject(i);
                         DiscoverRecommendAlbums hotAlbums = new DiscoverRecommendAlbums();
                         hotAlbums.parseJson(jj);
-                        ret.add(hotAlbums);
+                        discoverRecommendItems.add(hotAlbums);
                     }
+
+                    //添加推荐
+                    ret.put(Constants.KEY_RECOMMENDS, discoverRecommendItems);
+                    //-----------------------------推荐 -- listVIew 所有item数据解析完成
+
+                    //TODO 解析 focusImages
+                    JSONObject focusImagesJson = jsonObject.getJSONObject("focusImages");
+                    List<FocusImageItem> focusImageItems = new ArrayList<>();
+                    JSONArray focusArray = focusImagesJson.getJSONArray("list");
+                    len = focusArray.length();
+                    for (int i = 0; i < len; i++) {
+                        JSONObject jj = focusArray.getJSONObject(i);
+                        FocusImageItem focusImageItem = new FocusImageItem();
+                        focusImageItem.parseJson(jj);
+                        focusImageItems.add(focusImageItem);
+                    }
+
+                    //添加广告s
+                    ret.put(Constants.KEY_FOCUSE_IMAGES, focusImageItems);
+                    //-----------------------------推荐 -- listVIew 顶部 广告栏解析完成
 
                 }
             } catch (JSONException e) {

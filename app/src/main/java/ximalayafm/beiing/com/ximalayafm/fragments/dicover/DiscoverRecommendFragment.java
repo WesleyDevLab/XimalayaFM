@@ -17,8 +17,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import ximalayafm.beiing.com.ximalayafm.Constants;
 import ximalayafm.beiing.com.ximalayafm.R;
@@ -27,27 +29,34 @@ import ximalayafm.beiing.com.ximalayafm.adapters.PicPagerAdapter;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.AlbumRecommend;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendAlbums;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendItem;
+import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.FocusImageItem;
 import ximalayafm.beiing.com.ximalayafm.fragments.BaseFragment;
 import ximalayafm.beiing.com.ximalayafm.tasks.DiscoverRecommendTask;
 import ximalayafm.beiing.com.ximalayafm.tasks.TaskCallBack;
 import ximalayafm.beiing.com.ximalayafm.tasks.TaskResult;
 import ximalayafm.beiing.com.ximalayafm.utils.DimensionUtil;
+import ximalayafm.beiing.com.ximalayafm.widgets.TopView;
 
 /**
  */
 public class DiscoverRecommendFragment extends BaseFragment implements TaskCallBack, View.OnClickListener {
 
 
+    /**
+     * 推荐部分
+     */
     private DiscoverRecommendAdapter adapter;
     private List<DiscoverRecommendItem> items;
-
 
     /**
      * 轮播海报
      */
-    private ViewPager focusImagesPager;
-    private PicPagerAdapter picPagerAdapter;
+//    private ViewPager focusImagesPager;
+//    private PicPagerAdapter picPagerAdapter;
 
+    private TopView focusTopView;
+
+    private List<FocusImageItem> focusImageItems;
 
     public DiscoverRecommendFragment() {
         // Required empty public constructor
@@ -57,7 +66,8 @@ public class DiscoverRecommendFragment extends BaseFragment implements TaskCallB
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        items = new LinkedList<>();
+        items = new ArrayList<>();
+        focusImageItems = new ArrayList<>();
         adapter = new DiscoverRecommendAdapter(getActivity(), items);
 
     }
@@ -80,30 +90,15 @@ public class DiscoverRecommendFragment extends BaseFragment implements TaskCallB
         View ret = inflater.inflate(R.layout.fragment_discover_recommend, container, false);
         ListView listView = (ListView) ret.findViewById(R.id.discover_recommend_list);
 
-        //创建ViewPager
+        //创建海报栏
+        focusTopView = new TopView(getActivity());
 
-        focusImagesPager = new ViewPager(getActivity());
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                DimensionUtil.dp2px(getActivity(), 150));
-        focusImagesPager.setLayoutParams(lp);
-
-        ArrayList picData = new ArrayList();
-        //添加测试数据
-        for(int i = 0; i < 5; i++){
-            picData.add("" + i);
-        }
-        picPagerAdapter = new PicPagerAdapter(picData);
-        focusImagesPager.setAdapter(picPagerAdapter);
-
-        listView.addHeaderView(focusImagesPager);
+        listView.addHeaderView(focusTopView);
 
         //设置专辑推荐事件
         adapter.setOnRecommendAlbumCLickListener(this);
 
         listView.setAdapter(adapter);
-
-        focusImagesPager.setCurrentItem(Integer.MAX_VALUE >> 1);
 
         return ret;
     }
@@ -116,33 +111,50 @@ public class DiscoverRecommendFragment extends BaseFragment implements TaskCallB
 
     @Override
     public void onTaskFinished(TaskResult result) {
+
+        Toast.makeText(getActivity(), "onTaskFinished", Toast.LENGTH_SHORT).show();
         //　TODO　处理推荐列表
         if(result.action == Constants.TASK_ACTION_DISCOVER_RECOMMENDS){
             if(result.resultCode == Constants.TASK_RESULT_OK){
                 Object data = result.data;
-                if (data != null && data instanceof List) {
-                    List list = (List) data;
-                    //TODO 更新ListView Adapter
+                if (data != null && data instanceof Map) {
+                    HashMap<String, Object> map = (HashMap<String, Object>) data;
+//                    if(map.containsKey(Constants.KEY_RECOMMENDS)){
+                        //获取推荐部分
+                        Object o1 = map.get(Constants.KEY_RECOMMENDS);
+                        if (o1 != null && o1 instanceof List) {
+                            List list = (List) o1;
+                            //TODO 更新ListView Adapter
+                            //只要数据来了，就清除adapter
+                            items.clear();
+                            for(Object o : list){
+                                if(o instanceof  DiscoverRecommendItem){
+                                    items.add((DiscoverRecommendItem) o);
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
 
-                    //只要数据来了，就清除adapter
-                    items.clear();
-                    for(Object o : list){
-                        if(o instanceof  DiscoverRecommendItem){
-                            items.add((DiscoverRecommendItem) o);
+                            Toast.makeText(getActivity(), "推荐部分OK", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    adapter.notifyDataSetChanged();
-                } else if(data != null && data instanceof JSONObject){
-                    // focusImages
-                    //1.解析 轮播海报
+//                    }
 
-                    JSONObject json = (JSONObject) data;
-                    try {
-                        json.getJSONObject("focusImages");
+//                    if(map.containsKey(Constants.KEY_FOCUSE_IMAGES)){
+                        //获取海报部分数据
+                        Object o2 = map.get(Constants.KEY_FOCUSE_IMAGES);
+                        if (o2 != null && o2 instanceof List) {
+                            List list = (List) o2;
+                            focusImageItems.clear();
+                            for (Object o : list){
+                                if(o instanceof  FocusImageItem){
+                                    focusImageItems.add((FocusImageItem) o);
+                                }
+                            }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                            focusTopView.setDatas(focusImageItems);//加上这句特别慢???
+
+                            Toast.makeText(getActivity(), "广告部分ok", Toast.LENGTH_SHORT).show();
+                        }
+//                    }
                 }
             } else {
                 // TODO 提示错误信息

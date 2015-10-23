@@ -50,8 +50,8 @@ public class FocusImageItem implements Parsable{
             longTitle = json.getString("longTitle");
             pic = json.getString("pic");
             type = json.getInt("type");
-            uid = json.getLong("uid");
-            albumId = json.getLong("albumId");
+            uid = json.optLong("uid");
+            albumId = json.optLong("albumId");
             isShare = json.getBoolean("isShare");
             is_External_url = json.getBoolean("is_External_url");
         }

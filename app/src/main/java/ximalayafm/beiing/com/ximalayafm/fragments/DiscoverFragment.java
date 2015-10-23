@@ -68,7 +68,7 @@ public class DiscoverFragment extends Fragment implements TabLayout.OnTabSelecte
 
         pager.setAdapter(pagerAdapter);
 
-//        pager.setOffscreenPageLimit(4);
+        pager.setOffscreenPageLimit(4);
 
         // ViewPager 滑动与TabLayout绑定
         pager.addOnPageChangeListener(

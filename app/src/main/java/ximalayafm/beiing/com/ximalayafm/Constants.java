@@ -31,7 +31,15 @@ public class Constants {
     public static final int TASK_ACTION_DISCOVER_RECOMMENDS = 2 ;
 
 
+    //---点击的是哪一种类型的item
     public static final String TAG_DISCOVER_RECOMMEND_ALBUM = "albumRecommend:";
+
+    //推荐
+    public static final String KEY_RECOMMENDS = "recommends";
+    //广告
+    public static final String KEY_FOCUSE_IMAGES = "focusimages";
+
+
 }
 
 

@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import ximalayafm.beiing.com.ximalayafm.Constants;
 import ximalayafm.beiing.com.ximalayafm.R;
+import ximalayafm.beiing.com.ximalayafm.TaskAction;
 import ximalayafm.beiing.com.ximalayafm.fragments.BaseFragment;
 import ximalayafm.beiing.com.ximalayafm.tasks.DiscoverCategoryTask;
 import ximalayafm.beiing.com.ximalayafm.tasks.TaskCallBack;
@@ -46,7 +47,7 @@ public class DiscoverCatergoryFragment extends BaseFragment implements TaskCallB
     public void onTaskFinished(TaskResult result) {
         if(result != null){
             int action = result.action;
-            if(action == Constants.TASK_ACTION_DISCOVER_CATEGORIES){
+            if(action == TaskAction.TASK_ACTION_DISCOVER_CATEGORIES){
                 // TODO 结果是从 发现-分类任务中返回的,获取的是分类
                 if(result.resultCode == Constants.TASK_RESULT_OK){
                     //TODO 加载成功

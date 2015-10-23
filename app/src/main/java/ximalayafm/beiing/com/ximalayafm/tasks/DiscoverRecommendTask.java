@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ximalayafm.beiing.com.ximalayafm.Constants;
+import ximalayafm.beiing.com.ximalayafm.TaskAction;
 import ximalayafm.beiing.com.ximalayafm.client.ClientAPI;
 import ximalayafm.beiing.com.ximalayafm.utils.EntityParseUtil;
 
@@ -22,7 +23,7 @@ public class DiscoverRecommendTask extends BaseTask {
     protected TaskResult doInBackground(String... strings) {
         TaskResult ret = new TaskResult();
 
-        ret.action = Constants.TASK_ACTION_DISCOVER_RECOMMENDS;
+        ret.action = TaskAction.TASK_ACTION_DISCOVER_RECOMMENDS;
 
         JSONObject jsonObject = ClientAPI.getDiscoverRecommend("and-f6", true, true);
         if(jsonObject != null){

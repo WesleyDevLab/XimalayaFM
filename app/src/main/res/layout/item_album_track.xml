@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/item_album_track_time"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20小时前"/>
+
+    <TextView
+        android:id="@+id/item_album_track_title"
+        android:layout_toLeftOf="@id/item_album_track_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="吴晓波:“跑男”李嘉诚"
+        android:singleLine="true"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:id="@+id/item_album_play_count_tv"
+        android:layout_below="@id/item_album_track_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:drawableLeft="@drawable/album_play_count"
+        android:paddingTop="10dp"
+        android:text="4.4万"
+        />
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/item_album_alltime_tv"
+        android:layout_below="@id/item_album_track_time"
+        android:layout_toRightOf="@id/item_album_play_count_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:drawableLeft="@drawable/bg_myitem_alltime_new"
+        android:paddingTop="10dp"
+        android:text="34:05"
+        />
+
+    <TextView
+        android:id="@+id/item_album_comments_tv"
+        android:layout_toRightOf="@id/item_album_alltime_tv"
+        android:layout_below="@id/item_album_track_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:drawableLeft="@drawable/bg_myitem_comments_new"
+        android:paddingTop="10dp"
+        android:text="23"
+        />
+
+    <ImageView
+        android:id="@+id/item_album_download_iv"
+        android:layout_below="@id/item_album_track_time"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/album_track_btn_download_selector"
+        android:layout_marginTop="5dp"
+        />
+
+</RelativeLayout>

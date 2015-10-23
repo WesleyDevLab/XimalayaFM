@@ -24,7 +24,7 @@ public class AlbumBasic {
     private long albumId;
     private String coverLarge;
     private String title;
-    private String tags;
+    private String tags = "";
     /**
      * 曲目数
      */

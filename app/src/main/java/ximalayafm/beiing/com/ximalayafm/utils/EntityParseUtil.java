@@ -16,6 +16,9 @@ import java.util.Map;
 
 import ximalayafm.beiing.com.ximalayafm.Constants;
 import ximalayafm.beiing.com.ximalayafm.entity.DiscoverCategory;
+import ximalayafm.beiing.com.ximalayafm.entity.album_detail.AlbumDetail;
+import ximalayafm.beiing.com.ximalayafm.entity.album_detail.AlbumTrack;
+import ximalayafm.beiing.com.ximalayafm.entity.album_detail.TrackItem;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendAlbums;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendColumns;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.DiscoverRecommendItem;
@@ -143,6 +146,33 @@ public final class EntityParseUtil {
 
         return ret;
     }
+
+
+    /**
+     * 解析 专辑详情
+     *
+     * @param jsonObject
+     * @return
+     */
+    public static AlbumTrack parseAlbumDetail(JSONObject jsonObject){
+        AlbumTrack ret = null;
+        if (jsonObject != null) {
+            try {
+                int code = jsonObject.getInt("ret");
+                if (code == Constants.TASK_RESULT_OK) {
+                    ret = new AlbumTrack();
+
+                    ret.parseJson(jsonObject);
+
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return ret;
+    }
+
 }
 
 

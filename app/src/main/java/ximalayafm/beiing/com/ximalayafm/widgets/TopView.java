@@ -109,7 +109,7 @@ public class TopView extends FrameLayout {
 			FocusImageItem item = (FocusImageItem) img.getTag();
 			String url = item.getPic();
 			//使用Picasso 加载网络图片
-			Picasso.with(getContext()).load(url).resize(200, 120).into(img);
+			Picasso.with(getContext()).load(url).into(img);
 		}
 
 		new PlayImgThread().start();

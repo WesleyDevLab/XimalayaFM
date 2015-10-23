@@ -25,12 +25,6 @@ public class Constants {
     public static final int TASK_RESULT_OK = 0;
 
 
-    //--------
-    //异步任务action 标识
-    public static final int TASK_ACTION_DISCOVER_CATEGORIES = 1;
-    public static final int TASK_ACTION_DISCOVER_RECOMMENDS = 2 ;
-
-
     //---点击的是哪一种类型的item
     public static final String TAG_DISCOVER_RECOMMEND_ALBUM = "albumRecommend:";
 
@@ -39,7 +33,15 @@ public class Constants {
     //广告
     public static final String KEY_FOCUSE_IMAGES = "focusimages";
 
+    //专辑详情
+    public static final String KEY_ALBUM_DETAIL = "albumdetail";
+    //专辑详情-曲目列表
+    public static final String KEY_ALBUM_TRACK_LIST = "albumdetai_tracklist";
 
+
+    public static final String KEY_ALBUMID = "albumid";
+
+    public static final String KEY_TRACKID = "trackid";
 }
 
 

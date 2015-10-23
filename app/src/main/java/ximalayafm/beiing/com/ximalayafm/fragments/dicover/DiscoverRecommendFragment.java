@@ -22,8 +22,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import ximalayafm.beiing.com.ximalayafm.AlbumDetailActivity;
 import ximalayafm.beiing.com.ximalayafm.Constants;
 import ximalayafm.beiing.com.ximalayafm.R;
+import ximalayafm.beiing.com.ximalayafm.TaskAction;
 import ximalayafm.beiing.com.ximalayafm.adapters.DiscoverRecommendAdapter;
 import ximalayafm.beiing.com.ximalayafm.adapters.PicPagerAdapter;
 import ximalayafm.beiing.com.ximalayafm.entity.discoverrecommend.AlbumRecommend;
@@ -112,9 +114,9 @@ public class DiscoverRecommendFragment extends BaseFragment implements TaskCallB
     @Override
     public void onTaskFinished(TaskResult result) {
 
-        Toast.makeText(getActivity(), "onTaskFinished", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "onTaskFinished", Toast.LENGTH_SHORT).show();
         //　TODO　处理推荐列表
-        if(result.action == Constants.TASK_ACTION_DISCOVER_RECOMMENDS){
+        if(result.action == TaskAction.TASK_ACTION_DISCOVER_RECOMMENDS){
             if(result.resultCode == Constants.TASK_RESULT_OK){
                 Object data = result.data;
                 if (data != null && data instanceof Map) {
@@ -134,7 +136,7 @@ public class DiscoverRecommendFragment extends BaseFragment implements TaskCallB
                             }
                             adapter.notifyDataSetChanged();
 
-                            Toast.makeText(getActivity(), "推荐部分OK", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "推荐部分OK", Toast.LENGTH_SHORT).show();
                         }
 //                    }
 
@@ -152,7 +154,7 @@ public class DiscoverRecommendFragment extends BaseFragment implements TaskCallB
 
                             focusTopView.setDatas(focusImageItems);//加上这句特别慢???
 
-                            Toast.makeText(getActivity(), "广告部分ok", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "广告部分ok", Toast.LENGTH_SHORT).show();
                         }
 //                    }
                 }
@@ -175,6 +177,9 @@ public class DiscoverRecommendFragment extends BaseFragment implements TaskCallB
                 long albumId = albumRecommend.getAlbumId();
                 //曲目id
                 long trackId = albumRecommend.getTrackId();
+
+                //跳转到专辑详情
+                AlbumDetailActivity.startAlbumDetailActivity(getActivity(), albumId, trackId);
 
                 Toast.makeText(getActivity(), "albumId :" + albumId + " ," + trackId, Toast.LENGTH_SHORT ).show();
             }

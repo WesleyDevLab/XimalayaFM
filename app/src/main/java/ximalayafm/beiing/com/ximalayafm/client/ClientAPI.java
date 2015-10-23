@@ -35,14 +35,7 @@ public final class ClientAPI {
         JSONObject ret = null;
         byte[] data = HttpTools.doGet(API_POINT + "/mobile/discovery/v1/categories?device=android&picVersion=10&scale=2");
         if (data != null) {
-            try {
-                String str = new String(data, "utf-8");
-                ret = new JSONObject(str);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            ret = getJSONFromBytes(data);
         }
         return ret;
     }
@@ -72,6 +65,33 @@ public final class ClientAPI {
         String url = sb.toString();
         byte[] data = HttpTools.doGet(url);
         if (data != null) {
+            ret = getJSONFromBytes(data);
+        }
+        return ret;
+    }
+
+
+    //---------------------------------
+
+    //接口17
+    //返回专辑详情
+    public static JSONObject getAlbumDetail(String url){
+        JSONObject ret = null;
+        byte[] data = HttpTools.doGet(url);
+        if (data != null) {
+            ret = getJSONFromBytes(data);
+        }
+        return ret;
+    }
+
+    /**
+     * 把字节数组转化为JSONObject
+     * @param data
+     * @return
+     */
+    private static JSONObject getJSONFromBytes(byte[] data){
+        JSONObject ret = null;
+        if (data != null) {
             try {
                 String str = new String(data, "utf-8");
                 ret = new JSONObject(str);
@@ -81,17 +101,9 @@ public final class ClientAPI {
                 e.printStackTrace();
             }
         }
-//        String url = API_POINT + "/mobile/discovery/v1/recommends"
-//                + "?channel=" + channel
-//                +"&device=android"
-//                +"&includeActivity=" + includeActivity
-//                +"&includeSpecial=" + includeSpecial
-//                +"&scale=2&version=4.1.7.1";
         return ret;
     }
 
-
-    //---------------------------------
     //---------------------------------
     //---------------------------------
     //---------------------------------

@@ -4,6 +4,61 @@
     android:layout_height="match_parent">
 
 
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/fm_album_detail_scoll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/fm_album_detail_top_layout"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/album_sub_top_bg">
+                <TextView
+                    android:id="@+id/album_detail_track_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:text="共60集"/>
+
+                <TextView
+                    android:id="@+id/album_detail_sort_tv"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="排序"
+                    android:drawableLeft="@drawable/ic_album_sort_asc"/>
+
+                <TextView
+                    android:id="@+id/album_detail_page_select_tv"
+                    android:layout_toLeftOf="@id/album_detail_sort_tv"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="选集"
+                    android:drawableLeft="@drawable/pager_selector"/>
+
+            </RelativeLayout>
+
+            <ximalayafm.beiing.com.ximalayafm.widgets.MaxHeightListView
+                android:id="@+id/album_detail_track_list"
+                android:dividerHeight="0.5dp"
+                android:divider="@color/tras_gray"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </LinearLayout>
+
+
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
 
 
 

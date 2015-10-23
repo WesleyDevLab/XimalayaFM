@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="230dp"
+    android:background="@drawable/album_head_bg"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+        <ImageButton
+            android:id="@+id/album_detail_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/album_btn_back_selector"
+            />
+
+        <TextView
+            android:id="@+id/album_detail_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="吴晓波频道"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageButton
+            android:id="@+id/album_detail_more_ib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/actionbar_btn_more_selector"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/album_detail_album_icon"
+            android:layout_marginRight="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/image_default"
+            android:scaleType="fitXY"
+            />
+
+        <TextView
+            android:id="@+id/album_detail_play_count_tv"
+            android:layout_alignBottom="@id/album_detail_album_icon"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2715万"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:drawableLeft="@drawable/ic_album_play_count"/>
+
+        <ImageView
+            android:id="@+id/album_detail_artist_head"
+            android:layout_toRightOf="@+id/album_detail_album_icon"
+            android:layout_alignTop="@id/album_detail_album_icon"
+            android:background="@color/white"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <TextView android:id="@+id/album_detail_artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/album_detail_artist_head"
+            android:text="吴晓波频道"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            />
+
+        <TextView
+            android:id="@+id/album_detail_album_introduction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/album_detail_album_icon"
+            android:layout_below="@id/album_detail_artist_head"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="15dp"
+            android:text="著名财经作家吴晓波..."
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:drawableRight="@drawable/arrow_right_2"
+            />
+
+        <TextView
+            android:id="@+id/album_detail_album_tags"
+            android:layout_toRightOf="@id/album_detail_album_icon"
+            android:layout_alignBottom="@id/album_detail_album_icon"
+            android:text="吴晓波"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/album_detail_collect_tv"
+            android:layout_width="0dp"
+            android:paddingLeft="40dp"
+            android:layout_weight="1"
+            android:drawablePadding="5dp"
+            android:layout_height="wrap_content"
+            android:text="收藏"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/ic_album_collect"/>
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+        <TextView
+            android:id="@+id/album_detail_download_tv"
+            android:layout_width="0dp"
+            android:paddingLeft="30dp"
+            android:layout_weight="1"
+            android:drawablePadding="5dp"
+            android:layout_height="wrap_content"
+            android:text="批量下载"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/ic_album_download_normal"/>
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/album_detail_related_tv"
+            android:layout_width="0dp"
+            android:paddingLeft="30dp"
+            android:layout_weight="1"
+            android:drawablePadding="5dp"
+            android:layout_height="wrap_content"
+            android:text="相关推荐"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/ic_album_related_normal"/>
+
+    </LinearLayout>
+
+</LinearLayout>

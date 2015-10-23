@@ -52,7 +52,7 @@ public final class HttpTools {
                 //1.设置确定的Http头信息
 
                 //设置Accept头信息，告诉服务器，客户端能够接受什么样的数据
-                conn.setRequestProperty("Accept", "application/*, text/*, image/*");
+//                conn.setRequestProperty("Accept", "application/*, text/*, image/*");
 
                 //设置接收的内容压缩编码算法
                 conn.setRequestProperty("Accept-Encoding", "gzip");

@@ -1,37 +1,45 @@
 package ximalayafm.beiing.com.ximalayafm;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.Toast;
 
-public class AlbumDetailActivity extends AppCompatActivity {
+import ximalayafm.beiing.com.ximalayafm.fragments.AlbumDetailFragment;
+
+public class AlbumDetailActivity extends FragmentActivity {
+
+
+    public static void startAlbumDetailActivity(Context context, long albumId, long trackId){
+        Intent intent = new Intent(context,AlbumDetailActivity.class);
+        intent.putExtra(Constants.KEY_ALBUMID, albumId);
+        intent.putExtra(Constants.KEY_TRACKID, trackId);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_album_detail);
+
+        Intent intent = getIntent();
+        long albumId = intent.getLongExtra(Constants.KEY_ALBUMID, 0);
+        long trackId = intent.getLongExtra(Constants.KEY_TRACKID, 0);
+
+//        Toast.makeText(this, "albumid:" + albumId, Toast.LENGTH_SHORT).show();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.album_detail_container, AlbumDetailFragment.newInstance(albumId, trackId));
+        transaction.commit();
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_album_detail, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

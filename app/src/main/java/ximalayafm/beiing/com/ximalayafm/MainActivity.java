@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
 import ximalayafm.beiing.com.ximalayafm.fragments.CustomTingFragment;
 import ximalayafm.beiing.com.ximalayafm.fragments.DiscoverFragment;
 import ximalayafm.beiing.com.ximalayafm.fragments.DownloadTingFragment;
@@ -26,7 +28,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
      */
     private Fragment[] fragments;
     FragmentManager fragmentManager;
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

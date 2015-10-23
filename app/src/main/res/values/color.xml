@@ -20,4 +20,9 @@
 
     <!-- listView divider 颜色-->
     <color name="divider_bg_gray">#EEECE9</color>
+
+
+    <!-- 专辑详情顶部 listView上方部分的背景色-->
+    <color name="album_sub_top_bg">#F5F5F5</color>
+
 </resources>

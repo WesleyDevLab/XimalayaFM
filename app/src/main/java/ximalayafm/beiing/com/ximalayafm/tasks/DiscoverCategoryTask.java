@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ximalayafm.beiing.com.ximalayafm.Constants;
+import ximalayafm.beiing.com.ximalayafm.TaskAction;
 import ximalayafm.beiing.com.ximalayafm.client.ClientAPI;
 import ximalayafm.beiing.com.ximalayafm.utils.EntityParseUtil;
 
@@ -27,7 +28,7 @@ public class DiscoverCategoryTask extends BaseTask{
     protected TaskResult doInBackground(String... strings) {
         TaskResult ret = new TaskResult();
         //唯一
-        ret.action = Constants.TASK_ACTION_DISCOVER_CATEGORIES;
+        ret.action = TaskAction.TASK_ACTION_DISCOVER_CATEGORIES;
 
         JSONObject jsonObject = ClientAPI.getDiscoverCategories();
 

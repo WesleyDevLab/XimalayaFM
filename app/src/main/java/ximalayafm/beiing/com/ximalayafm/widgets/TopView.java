@@ -47,7 +47,7 @@ public class TopView extends FrameLayout {
 
 	private Context context;
 
-	private int curPosition = Integer.MAX_VALUE >> 1;// 当前位置
+	private int curPosition = 0;// 当前位置
 	private PicPagerAdapter adapter;
 
 	public TopView(Context context) {
@@ -100,17 +100,7 @@ public class TopView extends FrameLayout {
 		adapter = new PicPagerAdapter();
 		vPager.setAdapter(adapter);
 
-		try {
-			Field mFirstLayout = ViewPager.class.getDeclaredField("mFirstLayout");
-			mFirstLayout.setAccessible(true);
-			mFirstLayout.set(vPager, true);
-			adapter.notifyDataSetChanged();
-			vPager.setCurrentItem(curPosition);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-
-//		vPager.setCurrentItem(curPosition);
+		vPager.setCurrentItem(curPosition);
 		loadImage();
 	}
 
@@ -130,13 +120,14 @@ public class TopView extends FrameLayout {
 
 		@Override
 		public int getCount() {
-			int ret = 0;
-			if(imgViews != null){
-				if(!imgViews.isEmpty()){
-					ret = Integer.MAX_VALUE;//使用整形最大值，拉描述一个假的循环
-				}
-			}
-			return ret;
+//			int ret = 0;
+//			if(imgViews != null){
+//				if(!imgViews.isEmpty()){
+//					ret = Integer.MAX_VALUE;//使用整形最大值，拉描述一个假的循环
+//				}
+//			}
+//			return ret;
+			return imgViews == null ? 0 : imgViews.size();
 		}
 
 		/**
@@ -165,11 +156,11 @@ public class TopView extends FrameLayout {
 		public Object instantiateItem(ViewGroup container, int position) {
 			//TODO 因为getCount返回了整形最大值，所以 实际的数据个数是有限的，
 			//利用 position % 数据个数，从而映射成实际数据的索引
-			int index = position % imgViews.size();
+//			int index = position % imgViews.size();
 
 			//TODO 根据index 获取相应数据
 
-			ImageView ret = imgViews.get(index);
+			ImageView ret = imgViews.get(position);
 			container.addView(ret);
 			return ret;
 		}
@@ -181,7 +172,9 @@ public class TopView extends FrameLayout {
 		 */
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
-			container.removeView(imgViews.get(position % imgViews.size()));
+//			container.removeView(imgViews.get(position % imgViews.size()));
+
+			container.removeView(imgViews.get(position));
 		}
 	}
 
@@ -196,11 +189,10 @@ public class TopView extends FrameLayout {
 
 					Thread.sleep(3000);
 					mHandler.post(new Runnable() {
-
 						@Override
 						public void run() {
 							titleTv.setText(focusImageItems.get(curPosition).getShortTitle());
-							curPosition = ++curPosition;
+							curPosition = ++curPosition % imgViews.size();
 							vPager.setCurrentItem(curPosition);
 						}
 					});

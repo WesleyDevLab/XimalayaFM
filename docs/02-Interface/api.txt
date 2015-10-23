@@ -229,7 +229,7 @@ URL:
 
 参数顺序
 
-18 专辑详情
+18 曲目详情
 
 http://mobile.ximalaya.com/mobile/track/detail?device=android&trackId=8060450
 
@@ -239,7 +239,7 @@ http://mobile.ximalaya.com/mobile/track/detail
 	trackId	8060450
 
 
-19 专辑评论
+19 曲目评论  -- 对应18接口
 
 http://mobile.ximalaya.com/mobile/track/comment?device=android&pageSize=15&pageId=1&trackId=8060450
 

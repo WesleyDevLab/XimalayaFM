@@ -27,7 +27,7 @@ public class AlbumTrack {
     /**
      * 曲目列表
      */
-    private List<TrackItem> trackItems;
+    private List<TrackBig> trackBigs;
 
     /**
      * 曲目总数
@@ -41,20 +41,16 @@ public class AlbumTrack {
             albumDetail = new AlbumDetail();
             albumDetail.parseJson(j_album);
 
-            MyLog.d("===========", "albumDetail : " + albumDetail.toString());
-
-            trackItems = new ArrayList<>();
+            trackBigs = new ArrayList<>();
 
             JSONObject j_track = json.getJSONObject("tracks");
             JSONArray ja_track = j_track.getJSONArray("list");
             int len = ja_track.length();
             for (int i = 0; i < len; i++) {
                 JSONObject jj = ja_track.getJSONObject(i);
-                Gson gson = new Gson();
-                TrackItem item = gson.fromJson(jj.toString(), TrackItem.class);
-//                MyLog.d("---------------------------------------------", "item:" + item.toString());
-//                item.parseJson(item, jj);
-                trackItems.add(item);
+                TrackBig trackBig = new TrackBig();
+                trackBig.parseJson(jj);
+                trackBigs.add(trackBig);
             }
 
             totalCount = j_track.getInt("totalCount");
@@ -71,12 +67,12 @@ public class AlbumTrack {
         this.albumDetail = albumDetail;
     }
 
-    public List<TrackItem> getTrackItems() {
-        return trackItems;
+    public List<TrackBig> getTrackBigs() {
+        return trackBigs;
     }
 
-    public void setTrackItems(List<TrackItem> trackItems) {
-        this.trackItems = trackItems;
+    public void setTrackBigs(List<TrackBig> trackBigs) {
+        this.trackBigs = trackBigs;
     }
 
     public int getTotalCount() {

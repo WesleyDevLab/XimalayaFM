@@ -181,7 +181,7 @@ public class DiscoverRecommendFragment extends BaseFragment implements TaskCallB
                 //跳转到专辑详情
                 AlbumDetailActivity.startAlbumDetailActivity(getActivity(), albumId, trackId);
 
-                Toast.makeText(getActivity(), "albumId :" + albumId + " ," + trackId, Toast.LENGTH_SHORT ).show();
+//                Toast.makeText(getActivity(), "albumId :" + albumId + " ," + trackId, Toast.LENGTH_SHORT ).show();
             }
         }
 

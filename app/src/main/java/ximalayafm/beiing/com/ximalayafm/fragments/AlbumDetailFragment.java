@@ -3,7 +3,6 @@ package ximalayafm.beiing.com.ximalayafm.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
@@ -160,11 +158,9 @@ public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.
             if(result.resultCode == Constants.TASK_RESULT_OK){
                 if(result.data instanceof AlbumTrack){
                     AlbumTrack at = (AlbumTrack) result.data;
-                    adapter.addData(at.getTrackItems());
+                    adapter.addData(at.getTrackBigs());
 
                     updateUI(at.getAlbumDetail(), at.getTotalCount());
-//                    //滑动到最顶部
-//                    ptrScrollView.getRefreshableView().fullScroll(PullToRefreshScrollView.FOCUS_UP);
                 }
             }
 
@@ -172,8 +168,6 @@ public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.
         }
     }
 
-
-    private boolean isOnce = true;
 
     private void updateUI(AlbumDetail detail, int count){
         albumTitleTv.setText(detail.getTitle());
@@ -187,17 +181,6 @@ public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.
 
         Picasso.with(getActivity()).load(detail.getAvatarPath()).into(artistHead);
         Picasso.with(getActivity()).load(detail.getCoverSmall()).into(albumIcon);
-
-
-        if(isOnce){
-            try {
-                Thread.sleep(3000);
-                ptrScrollView.getRefreshableView().fullScroll(PullToRefreshScrollView.FOCUS_UP);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            isOnce = false;
-        }
 
     }
 

@@ -261,7 +261,7 @@ http://mobile.ximalaya.com/mobile/playlist/album
 	device	android
 	trackId	8060450
 
-21 专辑相关推荐
+21 专辑相关推荐 ---- 专辑列表
 
 http://ar.ximalaya.com/rec-association/recommend/album?device=android&trackId=8060450
 

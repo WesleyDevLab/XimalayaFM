@@ -1,7 +1,6 @@
 package ximalayafm.beiing.com.ximalayafm.adapters;
 
 import android.content.Context;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import ximalayafm.beiing.com.ximalayafm.R;
-import ximalayafm.beiing.com.ximalayafm.entity.album_detail.TrackItem;
+import ximalayafm.beiing.com.ximalayafm.entity.album_detail.TrackBig;
 
 /**
  * Date:2015/10/23
@@ -29,27 +25,27 @@ public class AlbumDetailAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
 
-    private List<TrackItem> trackItems;
+    private List<TrackBig> trackBigs;
 
     public AlbumDetailAdapter(Context context ){
         this.context = context;
         inflater = LayoutInflater.from(context);
-        trackItems = new ArrayList<>();
+        trackBigs = new ArrayList<>();
     }
 
-    public void addData(List<TrackItem> items){
-        trackItems.addAll(items);
+    public void addData(List<TrackBig> items){
+        trackBigs.addAll(items);
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return trackItems == null ? 0 : trackItems.size();
+        return trackBigs == null ? 0 : trackBigs.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return trackItems.get(i);
+        return trackBigs.get(i);
     }
 
     @Override
@@ -75,7 +71,7 @@ public class AlbumDetailAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        TrackItem item = trackItems.get(position);
+        TrackBig item = trackBigs.get(position);
         holder.trackTitle.setText(item.getTitle());
         holder.trackTime.setText((System.currentTimeMillis() - item.getCreatedAt()) + "");
         holder.playCountTv.setText(item.getPlaytimes() + "");

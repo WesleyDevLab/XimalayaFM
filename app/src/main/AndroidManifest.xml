@@ -32,6 +32,14 @@
             android:name=".AlbumDetailActivity"
             android:label="@string/title_activity_album_detail" >
         </activity>
+        <activity
+            android:name=".PlayActivity"
+            android:label="@string/title_activity_play" >
+        </activity>
+
+
+        <service android:name=".service.PlayService"
+            />
     </application>
 
 </manifest>

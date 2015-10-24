@@ -6,15 +6,72 @@ package ximalayafm.beiing.com.ximalayafm.entity.album_detail;
  * Email:15764230067@163.com
  **/
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
 
 import ximalayafm.beiing.com.ximalayafm.entity.Parsable;
 
 /**
  * 接口20返回的曲目列表--
  */
-public class TrackItem  implements Parsable{
+public class TrackItem  implements Parsable ,Parcelable {
+
+    public TrackItem(){
+
+    }
+
+    protected TrackItem(Parcel in) {
+        trackId = in.readLong();
+        uid = in.readLong();
+        playUrl64 = in.readString();
+        playUrl32 = in.readString();
+        downloadUrl = in.readString();
+        playPathAacv164 = in.readString();
+        playPathAacv224 = in.readString();
+        title = in.readString();
+        duration = in.readDouble();
+    }
+
+    public static final Creator<TrackItem> CREATOR = new Creator<TrackItem>() {
+        @Override
+        public TrackItem createFromParcel(Parcel in) {
+            return new TrackItem(in);
+        }
+
+        @Override
+        public TrackItem[] newArray(int size) {
+            return new TrackItem[size];
+        }
+    };
+
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(trackId);
+        parcel.writeLong(uid);
+        parcel.writeString(playUrl64);
+        parcel.writeString(playUrl32);
+        parcel.writeString(downloadUrl);
+        parcel.writeString(playPathAacv164);
+        parcel.writeString(playPathAacv224);
+        parcel.writeString(title);
+        parcel.writeDouble(duration);
+    }
+
+//    public TrackItem() {
+//
+//    }
 
     /**
      * trackId : 9221232
@@ -30,8 +87,8 @@ public class TrackItem  implements Parsable{
 
     private long trackId;
     private long uid;
-    private String playUrl64;
-    private String playUrl32;
+    private String playUrl64;  //高音质
+    private String playUrl32;  //低音质
     private String downloadUrl;
     private String playPathAacv164;
     private String playPathAacv224;
@@ -88,5 +145,21 @@ public class TrackItem  implements Parsable{
 
     public double getDuration() {
         return duration;
+    }
+
+
+    @Override
+    public String toString() {
+        return "TrackItem{" +
+                "trackId=" + trackId +
+                ", uid=" + uid +
+                ", playUrl64='" + playUrl64 + '\'' +
+                ", playUrl32='" + playUrl32 + '\'' +
+                ", downloadUrl='" + downloadUrl + '\'' +
+                ", playPathAacv164='" + playPathAacv164 + '\'' +
+                ", playPathAacv224='" + playPathAacv224 + '\'' +
+                ", title='" + title + '\'' +
+                ", duration=" + duration +
+                '}';
     }
 }

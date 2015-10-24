@@ -78,7 +78,7 @@ public class TopView extends FrameLayout {
 
 	public void setDatas(List<FocusImageItem> focusImageItems) {
 		this.focusImageItems = focusImageItems;
-		titleTv.setText(focusImageItems.get(0).getShortTitle());// 默认显示第一个广告
+		titleTv.setText(focusImageItems.get(curPosition).getShortTitle());// 默认显示第一个广告
 		createViews();
 	}
 
@@ -191,9 +191,9 @@ public class TopView extends FrameLayout {
 					mHandler.post(new Runnable() {
 						@Override
 						public void run() {
+							vPager.setCurrentItem(curPosition);
 							titleTv.setText(focusImageItems.get(curPosition).getShortTitle());
 							curPosition = ++curPosition % imgViews.size();
-							vPager.setCurrentItem(curPosition);
 						}
 					});
 				}

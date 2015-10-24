@@ -25,7 +25,7 @@ public class AlbumDetailAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
 
-    private List<TrackBig> trackBigs;
+    private ArrayList<TrackBig> trackBigs;
 
     public AlbumDetailAdapter(Context context ){
         this.context = context;
@@ -36,6 +36,10 @@ public class AlbumDetailAdapter extends BaseAdapter {
     public void addData(List<TrackBig> items){
         trackBigs.addAll(items);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<TrackBig> getTrackBigs(){
+        return trackBigs;
     }
 
     @Override

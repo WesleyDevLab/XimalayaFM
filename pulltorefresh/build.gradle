@@ -18,6 +18,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    //--出错不停止编译
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -15,12 +16,17 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ximalayafm.beiing.com.ximalayafm.Constants;
+import ximalayafm.beiing.com.ximalayafm.PlayActivity;
 import ximalayafm.beiing.com.ximalayafm.R;
 import ximalayafm.beiing.com.ximalayafm.TaskAction;
 import ximalayafm.beiing.com.ximalayafm.adapters.AlbumDetailAdapter;
 import ximalayafm.beiing.com.ximalayafm.entity.album_detail.AlbumDetail;
 import ximalayafm.beiing.com.ximalayafm.entity.album_detail.AlbumTrack;
+import ximalayafm.beiing.com.ximalayafm.entity.album_detail.TrackBig;
 import ximalayafm.beiing.com.ximalayafm.tasks.AlbumDetailTask;
 import ximalayafm.beiing.com.ximalayafm.tasks.TaskCallBack;
 import ximalayafm.beiing.com.ximalayafm.tasks.TaskResult;
@@ -32,8 +38,7 @@ import ximalayafm.beiing.com.ximalayafm.widgets.MaxHeightListView;
  * Email:15764230067@163.com
  **/
 
-public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.OnClickListener {
-
+public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.OnClickListener, AdapterView.OnItemClickListener {
 
     public static AlbumDetailFragment newInstance(long albumId, long trackId){
         AlbumDetailFragment adf = new AlbumDetailFragment();
@@ -93,13 +98,20 @@ public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.
         trackId = arguments.getLong(Constants.KEY_TRACKID);
     }
 
+    AlbumDetailTask task;
     @Override
     public void onResume() {
         super.onResume();
-        AlbumDetailTask task = new AlbumDetailTask(this);
+        task = new AlbumDetailTask(this);
         String url = getUrl();
         task.execute(url);
+    }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        task.cancel(true);
     }
 
     @Nullable
@@ -146,6 +158,9 @@ public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.
             }
         });
 
+        //listView item点击事件
+        mhListview.setOnItemClickListener(this);
+
     }
 
     private String getUrl(){
@@ -159,7 +174,7 @@ public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.
                 if(result.data instanceof AlbumTrack){
                     AlbumTrack at = (AlbumTrack) result.data;
                     adapter.addData(at.getTrackBigs());
-
+                    //更新UI
                     updateUI(at.getAlbumDetail(), at.getTotalCount());
                 }
             }
@@ -192,6 +207,15 @@ public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.
                 break;
         }
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        ArrayList<TrackBig> trackBigs = adapter.getTrackBigs();
+        PlayActivity.startPlayActivity(getActivity(), trackBigs, position);
+    }
+
+
+
 }
 
 

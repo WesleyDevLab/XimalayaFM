@@ -7,6 +7,9 @@ package ximalayafm.beiing.com.ximalayafm.entity.album_detail;
  **/
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +19,84 @@ import ximalayafm.beiing.com.ximalayafm.entity.Parsable;
  * 接口 17 返回的 一条曲目的详情：内容比较多--- 包含所有接口20返回的一条曲目的字段
  * ---所以以接口20得到的一条曲目作为父类
  */
-public class TrackBig extends TrackItem {
+public class TrackBig extends TrackItem implements Parcelable {
+
+    public TrackBig(){
+
+    }
+
+    protected TrackBig(Parcel in) {
+        super(in);
+        downloadAacUrl = in.readString();
+        processState = in.readInt();
+        createdAt = in.readLong();
+        coverSmall = in.readString();
+        coverLarge = in.readString();
+        nickname = in.readString();
+        smallLogo = in.readString();
+        userSource = in.readInt();
+        albumId = in.readLong();
+        albumTitle = in.readString();
+        albumImage = in.readString();
+        orderNum = in.readInt();
+        opType = in.readInt();
+        refUid = in.readLong();
+        refNickname = in.readString();
+        refSmallLogo = in.readString();
+        likes = in.readInt();
+        playtimes = in.readInt();
+        comments = in.readInt();
+        shares = in.readInt();
+        status = in.readInt();
+        downloadSize = in.readInt();
+        downloadAacSize = in.readInt();
+    }
+
+    public static final Creator<TrackBig> CREATOR = new Creator<TrackBig>() {
+        @Override
+        public TrackBig createFromParcel(Parcel in) {
+            return new TrackBig(in);
+        }
+
+        @Override
+        public TrackBig[] newArray(int size) {
+            return new TrackBig[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        super.writeToParcel(parcel, i);
+
+        parcel.writeString(downloadAacUrl);
+        parcel.writeInt(processState);
+        parcel.writeLong(createdAt);
+        parcel.writeString(coverSmall);
+        parcel.writeString(coverLarge);
+        parcel.writeString(nickname);
+        parcel.writeString(smallLogo);
+        parcel.writeInt(userSource);
+        parcel.writeLong(albumId);
+        parcel.writeString(albumTitle);
+        parcel.writeString(albumImage);
+        parcel.writeInt(orderNum);
+        parcel.writeInt(opType);
+        parcel.writeLong(refUid);
+        parcel.writeString(refNickname);
+        parcel.writeString(refSmallLogo);
+        parcel.writeInt(likes);
+        parcel.writeInt(playtimes);
+        parcel.writeInt(comments);
+        parcel.writeInt(shares);
+        parcel.writeInt(status);
+        parcel.writeInt(downloadSize);
+        parcel.writeInt(downloadAacSize);
+    }
 
 
     /**
@@ -198,6 +278,36 @@ public class TrackBig extends TrackItem {
 
     public int getDownloadAacSize() {
         return downloadAacSize;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "TrackBig{" +
+                "downloadAacUrl='" + downloadAacUrl + '\'' +
+                ", processState=" + processState +
+                ", createdAt=" + createdAt +
+                ", coverSmall='" + coverSmall + '\'' +
+                ", coverLarge='" + coverLarge + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", smallLogo='" + smallLogo + '\'' +
+                ", userSource=" + userSource +
+                ", albumId=" + albumId +
+                ", albumTitle='" + albumTitle + '\'' +
+                ", albumImage='" + albumImage + '\'' +
+                ", orderNum=" + orderNum +
+                ", opType=" + opType +
+                ", refUid=" + refUid +
+                ", refNickname='" + refNickname + '\'' +
+                ", refSmallLogo='" + refSmallLogo + '\'' +
+                ", isPublic=" + isPublic +
+                ", likes=" + likes +
+                ", playtimes=" + playtimes +
+                ", comments=" + comments +
+                ", shares=" + shares +
+                ", status=" + status +
+                ", downloadSize=" + downloadSize +
+                ", downloadAacSize=" + downloadAacSize +
+                '}';
     }
 }
 

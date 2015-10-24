@@ -1,22 +1,54 @@
 apply plugin: 'com.android.application'
 
 android {
+    //添加的签名文件的配置
+    signingConfigs {
+        //添加的配置名称
+        config {
+            keyAlias 'Beiing_release'
+            keyPassword 'BigBad670067'
+            //最好storeFIle 采用相对目录的方式
+            //相对，是相对于当前build.gradle文件所在的位置
+            //如果是放在app目录县，直接写‘release.keystore’即可
+            //如果放在上一级目录，那么 ../release.keystore
+            storeFile file('release.keystore')
+            storePassword 'BigBad'
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
-
     defaultConfig {
         applicationId "ximalayafm.beiing.com.ximalayafm"
         minSdkVersion 11
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    // 当前配置使用config名称 代表keystore文件，用于签名
+            signingConfig signingConfigs.config
         }
     }
+
+    //多渠道打包，定义的是渠道信息
+    productFlavors {
+        //模拟提交百度市场的版本
+        //内部可以参考defaultConfig来进行
+        //特定内容的编写
+//        baiduFlavor {
+//            applicationId "ximalayafm.beiing.com.ximalayafm.baidu"
+//        }
+    }
+
+    //--出错不停止编译
+        lintOptions {
+            abortOnError false
+        }
+
 }
 
 dependencies {

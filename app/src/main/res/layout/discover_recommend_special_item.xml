@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="afterDescendants">
 
 
     <RelativeLayout
@@ -32,6 +33,10 @@
         android:id="@+id/recommend_special_rl_0"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
+        android:background="@drawable/item_selector_white"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/recommend_special_cover_0"
@@ -104,7 +109,11 @@
     <RelativeLayout
         android:layout_below="@id/recommend_special_rl_0"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        android:background="@drawable/item_selector_white">
         <ImageView
             android:id="@+id/recommend_special_cover_1"
             android:layout_marginRight="10dp"

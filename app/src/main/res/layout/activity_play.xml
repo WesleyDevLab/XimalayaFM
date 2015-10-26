@@ -138,18 +138,50 @@
             android:layout_height="180dp"
             android:background="@drawable/image_default"/>
 
-        <SeekBar
-            android:id="@+id/ac_play_seekbar"
-            android:background="@color/white"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/ac_play_seekbar_rl"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/a_play_nowtime_tv"
+                android:text="00:00"
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/a_play_totaltime_tv"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="00:00"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"/>
+            <SeekBar
+                android:id="@+id/ac_play_seekbar"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_toRightOf="@id/a_play_nowtime_tv"
+                android:layout_toLeftOf="@id/a_play_totaltime_tv"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </RelativeLayout>
+
+
 
         <!-- 播放控制部分-->
         <RelativeLayout
-            android:layout_above="@id/ac_play_seekbar"
+            android:layout_above="@id/ac_play_seekbar_rl"
             android:layout_width="match_parent"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"

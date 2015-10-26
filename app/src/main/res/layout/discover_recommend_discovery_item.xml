@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="afterDescendants">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,6 +32,10 @@
             android:id="@+id/recommend_discovery_rl0"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
+            android:background="@drawable/item_selector_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
             android:layout_height="wrap_content">
 
             <ImageView
@@ -81,7 +86,11 @@
     <RelativeLayout
         android:id="@+id/recommend_discovery_rl1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        android:background="@drawable/item_selector_white">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,6 +140,10 @@
         android:id="@+id/recommend_discovery_rl2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        android:background="@drawable/item_selector_white"
          >
         <ImageView
             android:layout_width="wrap_content"
@@ -181,7 +194,11 @@
         android:id="@+id/recommend_discovery_r3"
         android:layout_below="@id/recommend_discovery_rl2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        android:background="@drawable/item_selector_white">
 
         <ImageView
             android:layout_width="wrap_content"

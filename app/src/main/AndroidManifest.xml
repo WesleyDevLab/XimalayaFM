@@ -8,6 +8,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".application.FMApplication"
         android:theme="@style/AppTheme" >
 
         <!-- 程序入口点 -->

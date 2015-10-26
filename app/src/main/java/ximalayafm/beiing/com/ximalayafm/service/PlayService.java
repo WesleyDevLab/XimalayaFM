@@ -13,6 +13,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import ximalayafm.beiing.com.ximalayafm.Constants;
+import ximalayafm.beiing.com.ximalayafm.application.FMApplication;
+import ximalayafm.beiing.com.ximalayafm.entity.album_detail.TrackBig;
 
 /**
  * Date:2015/10/24
@@ -35,7 +37,9 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
 
     private int sumLen;// 总时长
 
-    ProReceiver proReceiver;
+    private ProReceiver proReceiver;
+
+    private int curPosition = 0;//当前播放位置
 
     @Override
     public void onCreate() {
@@ -50,17 +54,14 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
 
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        // 判断是否播放新的歌曲
-        if (intent.getBooleanExtra(Constants.INTENT_EXTRA_CHANGE_MUSIC, false)) {
-            // 获取播放路径
-            String path = intent.getStringExtra(Constants.INTENT_EXTRA_MUSIC_PATH);
 
-//            Toast.makeText(getApplicationContext(), "service - path :" + path, Toast.LENGTH_SHORT).show();
-
-//            Log.w("------------------== :", path );
-
+    /**
+     * 播放音乐
+     * @param position
+     */
+    private void playMusic(int position){
+        if(position >= 0 && position < FMApplication.INSTANCE.getPlayList().size()){
+            String path = FMApplication.INSTANCE.getPlayList().get(position).getPlayUrl64();
             //播放新歌曲 - reset
             mPlayer.reset();
             try {
@@ -76,13 +77,32 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
                             mPlayer.setOnCompletionListener(PlayService.this);
 
                             new ProgressThread().start();//启动进度线程
+
+                            // TODO 发送开始播放广播给 PlayActivity
+                            Intent intent = new Intent(Constants.CAST_ACTION_MUSIC_COMPLETE);
+                            intent.putExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, curPosition);
+                            lbManager.sendBroadcast(intent);
                         }
                     }
                 });
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
+        }
+    }
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // 判断是否播放新的歌曲
+        if (intent.getBooleanExtra(Constants.INTENT_EXTRA_CHANGE_MUSIC, false)) {
+            // 获取播放路径
+//            String path = intent.getStringExtra(Constants.INTENT_EXTRA_MUSIC_PATH);
+            curPosition = intent.getIntExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, -1);
+            if(curPosition != -1){
+                playMusic(curPosition);
+            }
+        }else {
             if (mPlayer.isPlaying()) {
                 mPlayer.pause();// 暂停
             } else {
@@ -90,6 +110,8 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
                 new ProgressThread().start();//启动进度线程
             }
         }
+
+//            Toast.makeText(getApplicationContext(), "service - path :" + path, Toast.LENGTH_SHORT).show();
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -101,8 +123,12 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
      */
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
+        if(++curPosition == FMApplication.INSTANCE.getPlayList().size())
+            curPosition = 0;
+        playMusic(curPosition);
+
         // TODO 发送播放完毕的广播
-        Intent intent = new Intent(Constants.CAST_ACTION_MUSIC_COMPLETE);
+        Intent intent = new Intent(Constants.CAST_ACTION_MUSIC_START);
         lbManager.sendBroadcast(intent);
     }
 
@@ -123,7 +149,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
                     intent.putExtra(Constants.INTENT_EXTRA_MUSIC_CUR_LEN, currentPosition);
                     lbManager.sendBroadcast(intent);
 
-                    Thread.sleep(200);//200ms发一次 ，必须大于0，否则 ANR
+                    Thread.sleep(500);//200ms发一次 ，必须大于0，否则 ANR
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -137,7 +163,8 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     class ProReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int cur = 0;//从播放界面发送过来的进度
+            int cur = intent.getIntExtra(Constants.INTENT_EXTRA_MUSIC_CUR_LEN, 0);//从播放界面发送过来的进度
+
             mPlayer.seekTo(cur);
         }
     }

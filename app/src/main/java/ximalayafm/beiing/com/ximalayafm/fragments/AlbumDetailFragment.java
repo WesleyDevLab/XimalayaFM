@@ -24,6 +24,7 @@ import ximalayafm.beiing.com.ximalayafm.PlayActivity;
 import ximalayafm.beiing.com.ximalayafm.R;
 import ximalayafm.beiing.com.ximalayafm.TaskAction;
 import ximalayafm.beiing.com.ximalayafm.adapters.AlbumDetailAdapter;
+import ximalayafm.beiing.com.ximalayafm.application.FMApplication;
 import ximalayafm.beiing.com.ximalayafm.entity.album_detail.AlbumDetail;
 import ximalayafm.beiing.com.ximalayafm.entity.album_detail.AlbumTrack;
 import ximalayafm.beiing.com.ximalayafm.entity.album_detail.TrackBig;
@@ -211,6 +212,10 @@ public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         ArrayList<TrackBig> trackBigs = adapter.getTrackBigs();
+
+        //设置全局播放列表
+        FMApplication.INSTANCE.setPlayList(trackBigs);
+
         PlayActivity.startPlayActivity(getActivity(), trackBigs, position);
     }
 

@@ -47,8 +47,8 @@ public class Constants {
     //曲目列表
     public static final String TRACK_LIST = "tracklist";
 
-    //当前点击时-要播放的位置
-    public static final String CURRENT_PLAY_POSITION = "curplayposition";
+//    //当前点击时-要播放的位置
+//    public static final String CURRENT_PLAY_POSITION = "curplayposition";
 
 
 
@@ -66,6 +66,11 @@ public class Constants {
     public static final String CAST_ACTION_MUSIC_COMPLETE = "cast.action.music.complete";
 
     /**
+     * service从网络缓存完毕，开始播放
+     */
+    public static final String CAST_ACTION_MUSIC_START = "cast.action.music.start";
+
+    /**
      * 音乐播放进度广播 - 由Service发向播放界面
      */
     public static final String CAST_ACTION_MUSIC_PROGRESS = "cast.action.music.progress";
@@ -76,9 +81,9 @@ public class Constants {
     public static final String INTENT_EXTRA_CHANGE_MUSIC = "extra.change.music";
 
     /**
-     * 音乐播放路径
+     * 当前音乐播放位置
      */
-    public static final String INTENT_EXTRA_MUSIC_PATH = "extra.music.path";
+    public static final String INTENT_EXTRA_MUSIC_POSITION = "extra.music.position";
 
     /**
      * 音乐的总长度
@@ -86,7 +91,7 @@ public class Constants {
     public static final String INTEXT_EXTRA_MUSIC_TOTAL_LEN = "extra.music.total.len";
 
     /**
-     * 当前播放位置
+     * 当前播放长度
      */
     public static final String INTENT_EXTRA_MUSIC_CUR_LEN = "extra.music.cur.len";
 }

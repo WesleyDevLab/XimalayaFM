@@ -196,7 +196,7 @@ public class AlbumDetailFragment extends Fragment implements TaskCallBack, View.
         trackCountTv.setText("共" + count + "集");
 
         Picasso.with(getActivity()).load(detail.getAvatarPath()).into(artistHead);
-        Picasso.with(getActivity()).load(detail.getCoverSmall()).into(albumIcon);
+        Picasso.with(getActivity()).load(detail.getCoverLarge()).into(albumIcon);
 
     }
 

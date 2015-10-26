@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.squareup.picasso.Picasso;
 
@@ -35,7 +37,7 @@ import ximalayafm.beiing.com.ximalayafm.application.FMApplication;
 import ximalayafm.beiing.com.ximalayafm.entity.album_detail.TrackBig;
 import ximalayafm.beiing.com.ximalayafm.service.PlayService;
 
-public class PlayActivity extends Activity implements View.OnClickListener {
+public class PlayActivity extends Activity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     public static void startPlayActivity(Context context, ArrayList<TrackBig> trackBigs, int position){
         Intent intent = new Intent(context, PlayActivity.class);
@@ -80,6 +82,8 @@ public class PlayActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_play);
         //初始化控件
         initViews();
+        //进度条进度拖拽事件
+        seekBar.setOnSeekBarChangeListener(this);
 
         dateFormat = new SimpleDateFormat("mm:ss", Locale.CHINA);
         prgReceiver = new PrgReceiver();
@@ -122,6 +126,10 @@ public class PlayActivity extends Activity implements View.OnClickListener {
 
 
         notifyPlayIb = (ImageButton) findViewById(R.id.ac_notify_play_ib);
+
+        //刚进来时，播放按钮设置为不可用
+        notifyPlayIb.setEnabled(false);
+
         notifyPreIb = (ImageButton) findViewById(R.id.ac_notify_pre_ib);
         notifyNextIb = (ImageButton) findViewById(R.id.ac_notify_next_ib);
 
@@ -138,61 +146,6 @@ public class PlayActivity extends Activity implements View.OnClickListener {
     }
 
 
-
-    /**
-     * 进度条拖动事件
-     */
-    private void progEvent() {
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                int cur = seekBar.getProgress();
-                Intent intent = new Intent(
-                        Constants.CAST_ACTION_SEEKBAR_PROCESS);
-                intent.putExtra(Constants.INTENT_EXTRA_MUSIC_CUR_LEN, cur);
-                lbManager.sendBroadcast(intent);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                // 拖动进度条时，当前时间刷新
-                nowTimeTv.setText(dateFormat.format(new Date(progress)));
-            }
-        });
-
-    }
-
-
-
-//    /**
-//     * 更新UI
-//     * @param position
-//     */
-//    private void updateTopUI(int position, boolean playNew){
-//        if(playNew){
-//            if(position != -1){
-//                TrackBig trackBig = FMApplication.INSTANCE.getPlayList().get(position);
-//                titletv.setText(trackBig.getTitle());
-//                playTimesTv.setText(String.valueOf(trackBig.getPlaytimes()));
-//                Picasso.with(this).load(trackBig.getCoverSmall()).into(albumIconIv);
-//                //播放新的音乐时，
-//                seekBar.setProgress(0);
-//            }
-//            //设置播放按钮变为 暂停
-//            notifyPlayIb.setBackgroundResource(R.drawable.notify_pause_selector);
-//            Toast.makeText(this, "updateTopUI : 暂停按钮", Toast.LENGTH_SHORT).show();
-//        } else {
-//            //设置播放按钮变为 播放
-//            notifyPlayIb.setBackgroundResource(R.drawable.notify_play_selector);
-//            Toast.makeText(this, "updateTopUI : 播放按钮", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
     /**
      * 更新除了播放按钮之外的UI控件
      */
@@ -201,9 +154,11 @@ public class PlayActivity extends Activity implements View.OnClickListener {
             TrackBig trackBig = FMApplication.INSTANCE.getPlayList().get(position);
             titletv.setText(trackBig.getTitle());
             playTimesTv.setText(String.valueOf(trackBig.getPlaytimes()));
-            Picasso.with(this).load(trackBig.getCoverSmall()).into(albumIconIv);
+            Picasso.with(this).load(trackBig.getCoverLarge()).into(albumIconIv);
             //播放新的音乐时，
             seekBar.setProgress(0);
+            nowTimeTv.setText("00:00");
+            totalTimeTv.setText("00:00");
         }
     }
 
@@ -221,6 +176,8 @@ public class PlayActivity extends Activity implements View.OnClickListener {
             notifyPlayIb.setBackgroundResource(R.drawable.notify_play_selector);
             Toast.makeText(this, "updateTopUI : 播放按钮", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
 
@@ -234,7 +191,8 @@ public class PlayActivity extends Activity implements View.OnClickListener {
         Intent serviceIntent = new Intent(this, PlayService.class);
         serviceIntent.putExtra(Constants.INTENT_EXTRA_CHANGE_MUSIC, playNew);
         if(playNew){
-            serviceIntent.putExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, position);
+            if(position > -1 && position < FMApplication.INSTANCE.getPlayList().size())
+                serviceIntent.putExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, position);
         }
         startService(serviceIntent);
     }
@@ -260,8 +218,8 @@ public class PlayActivity extends Activity implements View.OnClickListener {
             case R.id.ac_notify_play_ib:
                 // TODO 点击播放按钮处理
                 isPlaying = ! isPlaying;
-                Toast.makeText(this, "isPlaying : " + isPlaying, Toast.LENGTH_SHORT).show();
-                playMusic(-1, isPlaying);
+                Log.e("--============", "activity:isPlaying : " + isPlaying);
+                playMusic(-1, false);
                 //更新playUI
                 updatePlayUI(isPlaying);
                 break;
@@ -272,7 +230,8 @@ public class PlayActivity extends Activity implements View.OnClickListener {
                     curPlayPosition = FMApplication.INSTANCE.getPlayList().size() - 1;
                 playMusic(curPlayPosition, true);
                 Toast.makeText(this, "上一首", Toast.LENGTH_SHORT).show();
-
+                notifyPlayIb.setEnabled(false);
+                notifyPlayIb.setBackgroundResource(R.drawable.notify_pause_selector);
                 updateOtherUI(curPlayPosition);
                 break;
 
@@ -282,11 +241,34 @@ public class PlayActivity extends Activity implements View.OnClickListener {
                     curPlayPosition = 0;
                 playMusic(curPlayPosition, true);
                 Toast.makeText(this, "下一首", Toast.LENGTH_SHORT).show();
-
+                notifyPlayIb.setEnabled(false);
+                notifyPlayIb.setBackgroundResource(R.drawable.notify_pause_selector);
                 updateOtherUI(curPlayPosition);
                 break;
         }
     }
+
+    //-------------------------seekBar回调方法
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        int cur = seekBar.getProgress();
+        Intent intent = new Intent(
+                Constants.CAST_ACTION_SEEKBAR_PROCESS);
+        intent.putExtra(Constants.INTENT_EXTRA_MUSIC_CUR_LEN, cur);
+        lbManager.sendBroadcast(intent);
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress,
+                                  boolean fromUser) {
+        // 拖动进度条时，当前时间刷新
+        nowTimeTv.setText(dateFormat.format(new Date(progress)));
+    }
+    //-------------------------
 
     /**
      * 自定义广播接受者
@@ -315,11 +297,18 @@ public class PlayActivity extends Activity implements View.OnClickListener {
                 //更新UI
                 updateOtherUI(curPlayPosition);
 
+                //播放完成，这段时间还没开始播放--
+                isPlaying = false;
+                notifyPlayIb.setEnabled(false);
+                updatePlayUI(isPlaying);
+
             } else if(action.equals(Constants.CAST_ACTION_MUSIC_START)){
                 // TODO 开始播放
-                notifyPlayIb.setBackgroundResource(R.drawable.notify_pause_selector);
+//                notifyPlayIb.setBackgroundResource(R.drawable.notify_pause_selector);
                 isPlaying = true;
+                notifyPlayIb.setEnabled(true);
                 updatePlayUI(isPlaying);
+
             }
         }
     }

@@ -33,7 +33,7 @@ public class AlbumDetailTask extends BaseTask {
 
             JSONObject detailJSON = ClientAPI.getAlbumDetail(url);
 
-            Log.d("----------------", "detailJSON = " + detailJSON.toString());
+//            Log.d("----------------", "detailJSON = " + detailJSON.toString());
 
             if (detailJSON != null) {
                 try {

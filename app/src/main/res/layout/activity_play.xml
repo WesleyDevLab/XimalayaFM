@@ -118,6 +118,8 @@
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:ellipsize="marquee"
                 android:text="秦汉401 让太子位"
                 android:textColor="@color/white"
@@ -221,6 +223,7 @@
                 android:layout_height="wrap_content"
                 android:text="播放列表"
                 android:drawablePadding="5dp"
+                android:textSize="12sp"
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/play_list_btn_selector"/>
 
@@ -231,6 +234,7 @@
                 android:layout_alignParentRight="true"
                 android:text="播放历史"
                 android:drawablePadding="5dp"
+                android:textSize="12sp"
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/play_history_selector"/>
         </RelativeLayout>

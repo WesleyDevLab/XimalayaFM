@@ -22,8 +22,7 @@ import ximalayafm.beiing.com.ximalayafm.entity.album_detail.TrackBig;
  * Email:15764230067@163.com
  **/
 
-public class PlayService extends Service implements MediaPlayer.OnCompletionListener {
-
+public class PlayService extends Service implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
 
     /**
      * 音乐播放组件
@@ -45,6 +44,8 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     public void onCreate() {
         super.onCreate();
         mPlayer = new MediaPlayer();
+        mPlayer.setOnCompletionListener(PlayService.this);
+        mPlayer.setOnPreparedListener(this);
         // 获取本地广播管理器
         lbManager = LocalBroadcastManager.getInstance(getApplicationContext());
 
@@ -54,6 +55,36 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
 
     }
 
+
+
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // 判断是否播放新的歌曲
+        if (intent.getBooleanExtra(Constants.INTENT_EXTRA_CHANGE_MUSIC, false)) {
+            Log.e("--========", "service ： 播放新歌曲");
+            // 获取播放路径
+//            String path = intent.getStringExtra(Constants.INTENT_EXTRA_MUSIC_PATH);
+            curPosition = intent.getIntExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, -1);
+            if(curPosition > -1 && curPosition < FMApplication.INSTANCE.getPlayList().size()){
+                playMusic(curPosition);
+            }
+        }else {
+            if (mPlayer.isPlaying()) {
+                mPlayer.pause();// 暂停
+                Log.e("--==========", "service ： 暂停");
+            } else {
+                mPlayer.start();// 播放
+                new ProgressThread().start();//启动进度线程
+                Log.e("--===========", "service ： 播放");
+            }
+        }
+
+//            Toast.makeText(getApplicationContext(), "service - path :" + path, Toast.LENGTH_SHORT).show();
+
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     /**
      * 播放音乐
@@ -67,55 +98,11 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             try {
                 mPlayer.setDataSource(path);
                 mPlayer.prepareAsync();
-                mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        if (mPlayer.isPlaying()) {
-                            mPlayer.pause();// 暂停
-                        } else {
-                            mPlayer.start();// 播放
-                            mPlayer.setOnCompletionListener(PlayService.this);
-
-                            new ProgressThread().start();//启动进度线程
-
-                            // TODO 发送开始播放广播给 PlayActivity
-                            Intent intent = new Intent(Constants.CAST_ACTION_MUSIC_COMPLETE);
-                            intent.putExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, curPosition);
-                            lbManager.sendBroadcast(intent);
-                        }
-                    }
-                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        // 判断是否播放新的歌曲
-        if (intent.getBooleanExtra(Constants.INTENT_EXTRA_CHANGE_MUSIC, false)) {
-            // 获取播放路径
-//            String path = intent.getStringExtra(Constants.INTENT_EXTRA_MUSIC_PATH);
-            curPosition = intent.getIntExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, -1);
-            if(curPosition != -1){
-                playMusic(curPosition);
-            }
-        }else {
-            if (mPlayer.isPlaying()) {
-                mPlayer.pause();// 暂停
-            } else {
-                mPlayer.start();// 播放
-                new ProgressThread().start();//启动进度线程
-            }
-        }
-
-//            Toast.makeText(getApplicationContext(), "service - path :" + path, Toast.LENGTH_SHORT).show();
-
-        return super.onStartCommand(intent, flags, startId);
-    }
-
 
     /**
      * 播放一首音乐结束的回调方法
@@ -128,8 +115,30 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         playMusic(curPosition);
 
         // TODO 发送播放完毕的广播
-        Intent intent = new Intent(Constants.CAST_ACTION_MUSIC_START);
+        Intent intent = new Intent(Constants.CAST_ACTION_MUSIC_COMPLETE);
+        intent.putExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, curPosition);
         lbManager.sendBroadcast(intent);
+
+
+    }
+
+    /**
+     * 缓存数据成功回调
+     * @param mediaPlayer
+     */
+    @Override
+    public void onPrepared(MediaPlayer mediaPlayer) {
+        if (mPlayer.isPlaying()) {
+            mPlayer.pause();// 暂停
+        } else {
+            mPlayer.start();// 播放
+
+            new ProgressThread().start();//启动进度线程
+
+            // TODO 发送开始播放广播给 PlayActivity
+            Intent intent = new Intent(Constants.CAST_ACTION_MUSIC_START);
+            lbManager.sendBroadcast(intent);
+        }
     }
 
 

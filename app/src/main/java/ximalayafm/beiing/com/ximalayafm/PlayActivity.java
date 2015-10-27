@@ -92,6 +92,7 @@ public class PlayActivity extends Activity implements View.OnClickListener, Seek
         proFilter.addAction(Constants.CAST_ACTION_MUSIC_PROGRESS);// 注册进度广播频道
         proFilter.addAction(Constants.CAST_ACTION_MUSIC_COMPLETE);// 播放完成的通知
         proFilter.addAction(Constants.CAST_ACTION_MUSIC_START);// 播放开始的广播
+        proFilter.addAction(Constants.CAST_ACTION_BUFFERING_UPDATE);// 缓存进度的广播
         lbManager.registerReceiver(prgReceiver, proFilter);
 
 
@@ -309,6 +310,12 @@ public class PlayActivity extends Activity implements View.OnClickListener, Seek
                 notifyPlayIb.setEnabled(true);
                 updatePlayUI(isPlaying);
 
+            } else if(action.equals(Constants.CAST_ACTION_BUFFERING_UPDATE)){
+                int progress = intent.getIntExtra(Constants.INTENT_EXTRA_BUFFERING_UPDATE, 0);
+                int max = intent.getIntExtra(Constants.INTEXT_EXTRA_MUSIC_TOTAL_LEN, 0);
+                seekBar.setMax(max);
+                seekBar.setSecondaryProgress(progress);
+//                Log.e("--=====----==", "max:" + max + "senProgress:" + progress);
             }
         }
     }

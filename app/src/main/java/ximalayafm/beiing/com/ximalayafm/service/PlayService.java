@@ -22,7 +22,7 @@ import ximalayafm.beiing.com.ximalayafm.entity.album_detail.TrackBig;
  * Email:15764230067@163.com
  **/
 
-public class PlayService extends Service implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
+public class PlayService extends Service implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnBufferingUpdateListener {
 
     /**
      * 音乐播放组件
@@ -44,8 +44,11 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     public void onCreate() {
         super.onCreate();
         mPlayer = new MediaPlayer();
+        //设置播放完成的监听
         mPlayer.setOnCompletionListener(PlayService.this);
+        //设置异步准备的监听
         mPlayer.setOnPreparedListener(this);
+        mPlayer.setOnBufferingUpdateListener(this);//Register a callback to be invoked when the status of a network stream's buffer has changed.
         // 获取本地广播管理器
         lbManager = LocalBroadcastManager.getInstance(getApplicationContext());
 
@@ -141,6 +144,27 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         }
     }
 
+    /**
+     * 缓存
+     * @param mediaPlayer
+     * @param progress
+     */
+    @Override
+    public void onBufferingUpdate(MediaPlayer mediaPlayer, int progress) {
+        // TODO 发送开始播放广播给 PlayActivity
+        Intent intent = new Intent(Constants.CAST_ACTION_BUFFERING_UPDATE);
+        sumLen = mPlayer.getDuration();
+        if(progress != 100){
+            progress = (int) (progress / 100f  *  sumLen);
+            intent.putExtra(Constants.INTENT_EXTRA_BUFFERING_UPDATE, progress);
+            intent.putExtra(Constants.INTEXT_EXTRA_MUSIC_TOTAL_LEN, sumLen);
+
+            lbManager.sendBroadcast(intent);
+//            Log.e("--=====----==service:", "sumLen:" + sumLen + "senProgress:" + progress);
+        }
+
+    }
+
 
     /**
      * 计算播放进度的线程
@@ -182,6 +206,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     public void onDestroy() {
         super.onDestroy();
         lbManager.unregisterReceiver(proReceiver);
+        mPlayer.release();
     }
 
 

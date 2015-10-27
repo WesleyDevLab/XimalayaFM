@@ -76,6 +76,16 @@ public class Constants {
     public static final String CAST_ACTION_MUSIC_PROGRESS = "cast.action.music.progress";
 
     /**
+     * 从网络缓存的进度
+     */
+    public static final String CAST_ACTION_BUFFERING_UPDATE = "cast.action.buffering.update";
+
+    /**
+     * 网络缓存进度的标识
+     */
+    public static final String INTENT_EXTRA_BUFFERING_UPDATE = "extra.buffering.update";
+
+    /**
      * 是否播放另一首音乐的标识
      */
     public static final String INTENT_EXTRA_CHANGE_MUSIC = "extra.change.music";

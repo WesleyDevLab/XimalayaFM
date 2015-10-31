@@ -65,27 +65,26 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 判断是否播放新的歌曲
-        if (intent.getBooleanExtra(Constants.INTENT_EXTRA_CHANGE_MUSIC, false)) {
-            Log.e("--========", "service ： 播放新歌曲");
-            // 获取播放路径
+        if (intent != null) {
+            if (intent.getBooleanExtra(Constants.INTENT_EXTRA_CHANGE_MUSIC, false)) {
+                Log.e("--========", "service ： 播放新歌曲");
+                // 获取播放路径
 //            String path = intent.getStringExtra(Constants.INTENT_EXTRA_MUSIC_PATH);
-            curPosition = intent.getIntExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, -1);
-            if(curPosition > -1 && curPosition < FMApplication.INSTANCE.getPlayList().size()){
-                playMusic(curPosition);
-            }
-        }else {
-            if (mPlayer.isPlaying()) {
-                mPlayer.pause();// 暂停
-                Log.e("--==========", "service ： 暂停");
-            } else {
-                mPlayer.start();// 播放
-                new ProgressThread().start();//启动进度线程
-                Log.e("--===========", "service ： 播放");
+                curPosition = intent.getIntExtra(Constants.INTENT_EXTRA_MUSIC_POSITION, -1);
+                if(curPosition > -1 && curPosition < FMApplication.INSTANCE.getPlayList().size()){
+                    playMusic(curPosition);
+                }
+            }else {
+                if (mPlayer.isPlaying()) {
+                    mPlayer.pause();// 暂停
+                    Log.e("--==========", "service ： 暂停");
+                } else {
+                    mPlayer.start();// 播放
+                    new ProgressThread().start();//启动进度线程
+                    Log.e("--===========", "service ： 播放");
+                }
             }
         }
-
-//            Toast.makeText(getApplicationContext(), "service - path :" + path, Toast.LENGTH_SHORT).show();
-
         return super.onStartCommand(intent, flags, startId);
     }
 

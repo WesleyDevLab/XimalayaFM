@@ -69,6 +69,15 @@ public class PlayActivity extends Activity implements View.OnClickListener, Seek
     TextView nowTimeTv;//当前时间
     TextView totalTimeTv;//总时间
 
+
+    // -- 听书者的 信息
+    private ImageView artistCover;
+    private TextView artisName;
+    private TextView subDetail;
+    private TextView albumDeacrip;
+
+
+
     private SimpleDateFormat dateFormat;
     private LocalBroadcastManager lbManager;// 本地广播管理器
 
@@ -109,6 +118,28 @@ public class PlayActivity extends Activity implements View.OnClickListener, Seek
         updateOtherUI(curPlayPosition);
         Toast.makeText(this, "正在请求数据，稍后播放", Toast.LENGTH_SHORT).show();
 
+
+        setArtistUI(curPlayPosition);
+
+    }
+
+    /**
+     * 设置作者信息
+     * @param position
+     */
+    private void setArtistUI(int position) {
+        if(position > -1 && position < FMApplication.INSTANCE.getPlayList().size()) {
+            TrackBig trackBig = FMApplication.INSTANCE.getPlayList().get(position);
+
+            artisName.setText(trackBig.getNickname());
+
+            String smallLogo = trackBig.getSmallLogo();
+//            trackBig.get
+            Picasso.with(this).load(smallLogo).into(artistCover);
+
+            subDetail = (TextView) findViewById(R.id.play_sub_detail);
+            albumDeacrip = (TextView) findViewById(R.id.play_ablum_descrip);
+        }
     }
 
     private void initViews() {
@@ -134,6 +165,13 @@ public class PlayActivity extends Activity implements View.OnClickListener, Seek
         notifyPreIb = (ImageButton) findViewById(R.id.ac_notify_pre_ib);
         notifyNextIb = (ImageButton) findViewById(R.id.ac_notify_next_ib);
 
+
+        artistCover = (ImageView) findViewById(R.id.play_artist_cover);
+        artisName = (TextView) findViewById(R.id.play_artist_name);
+        subDetail = (TextView) findViewById(R.id.play_sub_detail);
+        albumDeacrip = (TextView) findViewById(R.id.play_ablum_descrip);
+
+
         backIb.setOnClickListener(this);
         alarmClockIb.setOnClickListener(this);
         playListTv.setOnClickListener(this);
@@ -158,6 +196,7 @@ public class PlayActivity extends Activity implements View.OnClickListener, Seek
             Picasso.with(this).load(trackBig.getCoverLarge()).into(albumIconIv);
             //播放新的音乐时，
             seekBar.setProgress(0);
+            seekBar.setSecondaryProgress(0);
             nowTimeTv.setText("00:00");
             totalTimeTv.setText("00:00");
         }
@@ -301,6 +340,7 @@ public class PlayActivity extends Activity implements View.OnClickListener, Seek
                 //播放完成，这段时间还没开始播放--
                 isPlaying = false;
                 notifyPlayIb.setEnabled(false);
+
                 updatePlayUI(isPlaying);
 
             } else if(action.equals(Constants.CAST_ACTION_MUSIC_START)){
